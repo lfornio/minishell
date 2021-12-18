@@ -1,5 +1,9 @@
 NAME		= 	minishell
-SRCS		= 	minishell.c
+SRCS		= 	minishell.c \
+				func_1.c \
+				func_2.c \
+				func_3.c \
+				func_4.c
 
 CC 			= 	gcc
 FLAGS		=	-Wall -Wextra -Werror
@@ -16,9 +20,11 @@ ${NAME}: $(OBJS) $(INCLUDE)
 	$(MAKE) -C ./libft
 	$(CC) $(FLAGS) $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE)  $(LIB_READLINE) -o $(NAME)
 
-
 all : libft $(NAME)
 
+debug: $(OBJS) $(INCLUDE)
+	$(MAKE) -C ./libft
+	$(CC) $(FLAGS)  $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE)  $(LIB_READLINE) -g -o $(NAME)
 clean :
 	make -C libft clean
 	rm -f $(OBJS)
