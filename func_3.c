@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 08:38:00 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/18 10:16:47 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/21 10:13:34 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int error_prepars_double_quote(char *str)  //незакрытые двойные
 {
 	int len;
 	len = ft_strlen(str);
-	if (len >= 3 && str[len - 1] == '\"' && str[len - 2] == '\\')
-		return (1);
 	if (len == 1 || str[len - 1] != '\"')
 		return (1);
 	return (0);

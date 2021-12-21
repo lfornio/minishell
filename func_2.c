@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:14:03 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/18 11:49:07 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/21 10:18:09 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,27 +77,7 @@ void push_last_node_prepars(t_prepars **list, char *str) //функция доб
 	tmp->next = new;
 }
 
-char *ft_slesh(char *str, int *i) // функция обрабатывает  \ в строке
-{
-	int a;
-	a = *i;
-	(*i)++;
-	char *tmp;
-
-	if (str[*i] && (str[*i] == '\'' || str[*i] == '\"'))
-	{
-		tmp = ft_substr(str, a, 2);
-		(*i)++;
-	}
-	else
-	{
-		tmp = ft_substr(str, a, 1);
-	}
-	(*i)--;
-	return (tmp);
-}
-
-char *ft_single_quote(char *str, int *i) // функция обрабатывает  ' в строке
+char *ft_quote(char *str, int *i, char c) // функция обрабатывает  ' и " в строке
 {
 	int a;
 	a = *i;
@@ -107,45 +87,12 @@ char *ft_single_quote(char *str, int *i) // функция обрабатыва�
 	char *tmp;
 	while (str[*i])
 	{
-		if (str[*i] == '\'')
+		if (str[*i] == c)
 			break;
 		count++;
 		(*i)++;
 	}
-	if (str[*i] == '\'')
-		count++;
-	tmp = ft_substr(str, a, count);
-	return (tmp);
-}
-
-char *ft_double_quote(char *str, int *i)  //// функция обрабатывает " в строке
-{
-	int a;
-	a = *i;
-	(*i)++;
-	int count;
-	count = 1;
-	char *tmp;
-	while (str[*i])
-	{
-		if (str[*i] == '\\')
-		{
-			(*i)++;
-			if (str[*i] && str[*i] == '\"')
-			{
-				count+=2;
-				(*i)++;
-			}
-			else
-				count++;
-
-		}
-		if (str[*i] == '\"')
-			break;
-		count++;
-		(*i)++;
-	}
-	if (str[*i] == '\"')
+	if (str[*i] == c)
 		count++;
 	tmp = ft_substr(str, a, count);
 	return (tmp);
@@ -159,7 +106,7 @@ char *ft_non(char *str, int *i)    //функция обрабатывает с�
 
 	a = *i;
 	count = 0;
-	while (str[*i] && str[*i] != '\\' && str[*i] != '\'' && str[*i] != '\"')
+	while (str[*i] && str[*i] != '\'' && str[*i] != '\"')
 	{
 		count++;
 		(*i)++;
@@ -178,12 +125,10 @@ t_prepars *preparsing_str(char *str)   //функция делить строк�
 
 	while (str[i])
 	{
-		if (str[i] == '\\')
-			tmp = ft_slesh(str, &i);
-		else if (str[i] == '\'')
-			tmp = ft_single_quote(str, &i);
+		if (str[i] == '\'')
+			tmp = ft_quote(str, &i, '\'');
 		else if (str[i] == '\"')
-			tmp = ft_double_quote(str, &i);
+			tmp = ft_quote(str, &i, '\"');
 		else
 			tmp = ft_non(str, &i);
 		if (j == 0)

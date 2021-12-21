@@ -3,7 +3,9 @@ SRCS		= 	minishell.c \
 				func_1.c \
 				func_2.c \
 				func_3.c \
-				func_4.c
+				func_4.c \
+				func_5.c \
+				func_6.c
 
 CC 			= 	gcc
 FLAGS		=	-Wall -Wextra -Werror

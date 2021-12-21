@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 10:17:05 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/18 11:36:25 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/21 15:29:17 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ t_prepars *delete_node_prepars(t_prepars *p, t_prepars *head)  //удаляет 
 	return(tmp);
 }
 
-void gluing_strings_without_quotes(t_prepars **list)   //функция склеивает строки без ' и " в списке
+void gluing_strings_without_pipe(t_prepars *list)   //функция склеивает строки без ' и " в списке
 {
 	t_prepars *p;
 	t_prepars *head;
-	p = *list;
-	head = *list;
+	p = list;
+	head = list;
 	char *s1;
 	char *s2;
 	char *tmp;
@@ -57,7 +57,7 @@ void gluing_strings_without_quotes(t_prepars **list)   //функция скле
 	{
 		s1 = get_str_from_list(head, index);
 		s2 = get_str_from_list(head, index + 1);
-		if (s1[0] != '\'' && s1[0] != '\"' && s2[0] != '\'' && s2[0] != '\"')
+		if (s1[0] != '|' && s2[0] != '|')
 		{
 			tmp = ft_strjoin(s1, s2);
 			free(p->str);

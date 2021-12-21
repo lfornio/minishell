@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/18 11:48:08 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/21 15:29:28 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,17 @@ int main(int argc, char **argv, char **envp)
 	print_list_prepars(prepars_list);
 	printf("============================\n");
 	error_prepars_str(prepars_list, line);
-	gluing_strings_without_quotes(&prepars_list);  // создали список для препарса склеенный
+	removing_spaces_and_tabs(prepars_list);    //убрали лишние пробелы и табуляции
 	print_list_prepars(prepars_list);
+	printf("============================\n");
+	search_for_commands(prepars_list);      // ищем |
+	print_list_prepars(prepars_list);
+	printf("============================\n");
+	gluing_strings_without_pipe(prepars_list);
+	print_list_prepars(prepars_list);
+	printf("============================\n");
+
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/18 10:19:44 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/21 15:27:22 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int error_prepars_single_quote(char *str);
 int error_prepars_double_quote(char *str);
 void error_prepars_str(t_prepars *prepars_list, char *line);
 int size_list_prepars(t_prepars *list);
-void gluing_strings_without_quotes(t_prepars **list);
-
+void removing_spaces_and_tabs(t_prepars *list);
+void search_for_commands(t_prepars *list);
+void gluing_strings_without_pipe(t_prepars *list) ;
 
 #endif
