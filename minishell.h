@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/21 15:27:22 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/23 15:53:12 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void error_prepars_str(t_prepars *prepars_list, char *line);
 int size_list_prepars(t_prepars *list);
 void removing_spaces_and_tabs(t_prepars *list);
 void search_for_commands(t_prepars *list);
-void gluing_strings_without_pipe(t_prepars *list) ;
+void gluing_strings_without_pipe(t_prepars *list);
+void removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list);
+int count_pipes(t_prepars *list);
+char *get_str_from_list(t_prepars *list, int index) ;
 
 #endif

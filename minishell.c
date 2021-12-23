@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/21 15:29:28 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/23 16:09:17 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,17 @@ int main(int argc, char **argv, char **envp)
 	search_for_commands(prepars_list);      // ищем |
 	print_list_prepars(prepars_list);
 	printf("============================\n");
-	gluing_strings_without_pipe(prepars_list);
+	gluing_strings_without_pipe(prepars_list);  // скдеили строки без |
 	print_list_prepars(prepars_list);
 	printf("============================\n");
+	removing_spaces_at_the_beginning_and_end_in_str(prepars_list);   //удалили пробелы в начале и конце каждой строки
+	print_list_prepars(prepars_list);
+	printf("============================\n");
+	int count_pipe;
+	count_pipe = count_pipes(prepars_list);
+	print_list_prepars(prepars_list);
+	printf("============================\n");
+
 
 
 

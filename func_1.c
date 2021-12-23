@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:42:42 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/15 16:08:03 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/23 15:40:38 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void push_last_node(t_list **list, char *str) //функция добавляе�
 	tmp->next = new;
 }
 
-void free_list(t_list **list)
+void free_list(t_list **list) // удаляет список
 {
 	t_list *p;
 
@@ -71,7 +71,7 @@ void free_list(t_list **list)
 	}
 }
 
-void print_list(t_list **list)
+void print_list(t_list **list) //печатает список
 {
 	t_list *p;
 	p = *list;

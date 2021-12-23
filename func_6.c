@@ -6,13 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:10:40 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/21 15:25:28 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/23 14:48:33 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int error_pipe_found(char *str, int i, int count)
+int error_pipe_found(char *str, int i, int count) // щшибка пайпа
 {
 	if (count == 0 && (i == 0 || i == 1) && str[i] == '|')
 	{
@@ -39,7 +39,7 @@ int error_pipe_found(char *str, int i, int count)
 	return (0);
 }
 
-t_prepars *a_new_node_in_the_middle(t_prepars *middle, char *str)
+t_prepars *a_new_node_in_the_middle(t_prepars *middle, char *str) //добавляем новый узел в середину
 {
 	t_prepars *new;
 	t_prepars *tmp;
@@ -52,24 +52,24 @@ t_prepars *a_new_node_in_the_middle(t_prepars *middle, char *str)
 	new->next = tmp;
 	return (new);
 }
-t_prepars *split_command(char **tab, t_prepars *p, t_prepars *head)
-{
-	printf("1\n");
-	print_list_prepars(head);
-	int i;
-	i = 0;
-	free(p->str);
-	p->str = ft_strdup(tab[0]);
-	p = a_new_node_in_the_middle(p, "|");
-	p = a_new_node_in_the_middle(p, tab[1]);
+// t_prepars *split_command(char **tab, t_prepars *p, t_prepars *head)
+// {
+// 	printf("1\n");
+// 	print_list_prepars(head);
+// 	int i;
+// 	i = 0;
+// 	free(p->str);
+// 	p->str = ft_strdup(tab[0]);
+// 	p = a_new_node_in_the_middle(p, "|");
+// 	p = a_new_node_in_the_middle(p, tab[1]);
 
-	free(tab);
-	printf("2\n");
-	print_list_prepars(head);
-	return (p);
-}
+// 	free(tab);
+// 	printf("2\n");
+// 	print_list_prepars(head);
+// 	return (p);
+// }
 
-t_prepars *search(char *str, int count, t_prepars *p)
+t_prepars *search(char *str, int count, t_prepars *p) // если нашли | то перезаписываем список
 {
 	int i;
 	i = 0;
@@ -106,7 +106,7 @@ t_prepars *search(char *str, int count, t_prepars *p)
 
 	return (NULL);
 }
-int found_char_c(char *str, char c)
+int found_char_c(char *str, char c) //ищем с
 {
 	int i;
 	i = 0;
@@ -119,7 +119,7 @@ int found_char_c(char *str, char c)
 	return(0);
 }
 
-void search_for_commands(t_prepars *list)
+void search_for_commands(t_prepars *list)  // ищет пайпы и презаписывает список в строках без ' "
 {
 	t_prepars *p;
 	p = list;
