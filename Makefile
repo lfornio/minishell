@@ -6,7 +6,10 @@ SRCS		= 	minishell.c \
 				func_4.c \
 				func_5.c \
 				func_6.c \
-				func_7.c
+				func_7.c \
+				func_8.c \
+				func_9.c \
+				func_10.c
 
 
 CC 			= 	gcc

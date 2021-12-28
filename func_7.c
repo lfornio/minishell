@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:48:43 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/23 16:13:32 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/24 14:01:09 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,50 +44,35 @@ void removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)  //ище�
 	}
 }
 
-void delete_last_node(t_prepars *p, t_prepars *head)
-{
-	t_prepars *tmp;
-	tmp = head;
-	while(tmp->next != p)
-	{
-		tmp = tmp->next;
-	}
-	tmp->next = NULL;
-	free(p->str);
-	free(p);
-}
-t_prepars *get_ptr_from_list(t_prepars *list, int index) // функция берет указатель по индексу в списке
+
+
+int count_pipes(t_prepars *list)  // считаем сколько пайпов
 {
 	t_prepars *p;
-	int i;
-
-	i = 1;
 	p = list;
-	while (i < index)
+	int count;
+	count = 0;
+	while(p)
 	{
+		if (p->str[0] == '|')
+			count++;
 		p = p->next;
-		i++;
 	}
-	return (p);
+	return(count);
 }
 
-int count_pipes(t_prepars *list)
+void delete_node_with_pipe(t_prepars *list)  //удаляем узлы с пайпами
 {
-	t_prepars *p = list;
-	t_prepars *tmp;
-	int size;
-	size = size_list_prepars(p);
-	char *s;
-	s = get_str_from_list(p, size);
-	tmp = get_ptr_from_list(p, size);
-	if(ft_strlen(s) == 0)
-		delete_last_node(tmp, list);
-
-
-
-
-
-	return(size);
-
+	t_prepars *p;
+	p = list;
+	while(p)
+	{
+		if(p->str[0] == '|')
+		{
+			p = delete_node_prepars(p, list);
+			continue;
+		}
+		 p = p->next;
+	}
 
 }

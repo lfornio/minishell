@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:10:40 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/23 14:48:33 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/24 11:29:47 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,54 @@ void search_for_commands(t_prepars *list)  // ищет пайпы и преза�
 		count_node++;
 		p = p->next;
 	}
+}
+
+void delete_last_node(t_prepars *p, t_prepars *head)  // удаляет последний узел в списке
+{
+	t_prepars *tmp;
+	tmp = head;
+	while(tmp->next != p)
+	{
+		tmp = tmp->next;
+	}
+	tmp->next = NULL;
+	free(p->str);
+	free(p);
+}
+
+t_prepars *get_ptr_from_list(t_prepars *list, int index) // функция берет указатель по индексу в списке
+{
+	t_prepars *p;
+	int i;
+
+	i = 1;
+	p = list;
+	while (i < index)
+	{
+		p = p->next;
+		i++;
+	}
+	return (p);
+}
+void error_last_pipe(t_prepars *list)   // если последний узел пустой - удаляет, если пайп - ошибка
+{
+	t_prepars *p = list;
+	t_prepars *tmp;
+	int size;
+	size = size_list_prepars(p);
+	char *s;
+	s = get_str_from_list(p, size);
+	tmp = get_ptr_from_list(p, size);
+	if(ft_strlen(s) == 0)
+		delete_last_node(tmp, list);
+	size = size_list_prepars(p);
+	s = get_str_from_list(p, size);
+	if(ft_strncmp(s, "|", 1) == 0)
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		exit(1);
+	}
+
 }
 
 
