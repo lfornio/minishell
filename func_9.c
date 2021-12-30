@@ -6,12 +6,28 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:27:41 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/28 18:55:00 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/29 17:35:29 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+char *get_argumens(char *str)
+{
+	int i;
+	i = 0;
+	char *s;
+	while(str[i])
+	{
+		if(str[i] == ' ')
+			break;
+		i++;
+	}
+	s = ft_substr(str, i + 1, ft_strlen(str) - i);
+	return(s);
+
+}
 char *change_dollar(char *str, t_data *data)  // ищет совпадение ключа
 {
 	t_list *p;
@@ -40,32 +56,55 @@ char *processing_the_dollar(char *str, int *i, t_data *data) // ищем клю�
 	count = 0;
 	while (str[*i])
 	{
-		if (ft_isalnum(str[*i]) || str[*i] == '_')
+		if(str[a] == ' ')
+			break;
+		else if(str[a] == '?' || ft_isdigit(str[a]))
+		{
+			(*i)++;
+			break;
+		}
+		else if (ft_isalnum(str[*i]) || str[*i] == '_')
 			count++;
 		else
 			break;
 		(*i)++;
 	}
+
+
+
 	char *key = NULL;
 	char *val = NULL;
+		char *after_dollar = NULL;
+	char *tmp1 = NULL;
+	char *tmp2 = NULL;
 	if (count)
 	{
 		key = ft_substr(str, a, count);
 		val = change_dollar(key, data);
 		free(key);
 	}
-
-	char *after_dollar = NULL;
-	char *tmp1 = NULL;
-	char *tmp2 = NULL;
-
 	after_dollar = ft_substr(str, (*i), (int)ft_strlen(str));
+	char *p;
+	char *q;
+
 	if (val)
 		tmp1 = ft_strjoin(before_dollar, val);
+	else if (str[a] == '?')
+	{
+		q = ft_itoa(data->exit_code);
+		tmp1 = ft_strjoin(before_dollar, q);
+		free(q);
+	}
+
 	else
 	{
 		if (after_dollar[0] == ' ')
-			after_dollar = ft_substr(after_dollar, 1, ft_strlen(after_dollar) - 1);
+		{
+			p = ft_strdup(after_dollar);
+			free(after_dollar);
+			after_dollar = ft_substr(p, 1, ft_strlen(after_dollar) - 1);
+			free(p);
+		}
 		tmp1 = ft_strdup(before_dollar);
 	}
 	tmp2 = ft_strjoin(tmp1, after_dollar);
@@ -107,6 +146,10 @@ char *after_dollar_char(char *str, int *i, t_data *data) //проверяем ч
 	{
 		free(str);
 		return (copy);
+	}
+	else if(copy[*i] == '?')
+	{
+		copy = processing_the_dollar(copy, i, data);
 	}
 	else if(ft_isdigit(copy[*i]))
 			copy = removing_the_dollar_before_quotes(copy, i);
@@ -178,7 +221,6 @@ char *removing_the_double_quotes(char *str, int *i, t_data *data) // убрал�
 		{
 			if (copy[(*i) + 1] && copy[(*i) + 1] == '\"')
 			{
-
 				copy = removing_the_quotes(copy, &a, '\"');
 				(*i)--;
 				free(before);
@@ -192,8 +234,9 @@ char *removing_the_double_quotes(char *str, int *i, t_data *data) // убрал�
 		count++;
 		(*i)++;
 	}
+
+	(*i) -= 2;
 	copy = removing_the_quotes(copy, &a, '\"');
-	(*i)--;
 	free(before);
 	free(str);
 	return (copy);
@@ -205,8 +248,7 @@ char *change_dollar_in_str(char *str, t_data *data) // идем по строк�
 	i = 0;
 	char *copy;
 	copy = ft_strdup(str);
-	int a;
-	a = data->count_pipe; // убрать потом
+	// char *s = NULL;
 	while (copy[i])
 	{
 		if (copy[i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/28 13:11:48 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/30 15:20:35 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,46 +17,43 @@ char *get_command_from_str(char *str)
 	char *s;
 	int i;
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == ' ')
+		if (str[i] == ' ')
 			break;
 		i++;
 	}
 	s = ft_substr(str, 0, i);
-	printf("s = %s\n", s);
-	return(s);
+	return (s);
 }
 
-void skip_the_quotes(char *str, int *i, char c)  //пропускаем кавычки
+void skip_the_quotes(char *str, int *i, char c) //пропускаем кавычки
 {
 	(*i)++;
-	while(str[*i])
+	while (str[*i])
 	{
-		if(str[*i] == c)
-			return ;
+		if (str[*i] == c)
+			return;
 		(*i)++;
 	}
 }
 
-
-int get_redirect_flag(char *str)
+int get_redirect_flag(char *str) //берем флаг редиректа
 {
 	int i;
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == '\"')
+		if (str[i] == '\"')
 			skip_the_quotes(str, &i, '\"');
-		else if(str[i] == '\'')
+		else if (str[i] == '\'')
 			skip_the_quotes(str, &i, '\'');
-		else if(str[i] == '>' || str[i] == '<')
-			return(1);
+		else if (str[i] == '>' || str[i] == '<')
+			return (1);
 		i++;
 	}
 	return (0);
 }
-
 
 t_cmd *push_node_cmd_firs(t_data *data, t_prepars *list) //функция создает 1ый узел в списке команд
 {
@@ -67,36 +64,33 @@ t_cmd *push_node_cmd_firs(t_data *data, t_prepars *list) //функция соз
 		printf("Error malloc\n");
 		exit(1);
 	}
-	// new->num_cmd = data->count_commands;
+	new->num_cmd = 0;
 	new->full_str = ft_strdup(list->str);
-
-
-	new->cmd = get_command_from_str(list->str);
 	new->redirect_flag = get_redirect_flag(list->str);
-	printf("flag = %d\n", new->redirect_flag);
-	if(!new->redirect_flag)
-		{
-			new->full_str_without_dollar = change_dollar_in_str(list->str, data);
-			printf("full_without_$ = %s\n", new->full_str_without_dollar);
+	char *s;
 
+	if (!new->redirect_flag)
+	{
+		s = change_dollar_in_str(list->str, data);
+		new->command = get_command_from_str(s);
+		new->argument = get_argumens(s);
+		printf("command = %s\n", new->command);
+		printf("argument = %s\n", new->argument);
+		free(s);
 
-
-
-
-
-			// new->tab_cmd = ft_split(list->str, ' ');
-			// for(int l = 0; new->tab_cmd[l]; l++)
-			// 	printf(" %s / ", new->tab_cmd[l]);
-			// printf("\n");
-			// new->tab_redirect = NULL;
-		}
+		new->tab_cmd = split_str_whitespace(list->str, data);
+		for(int l = 0; new->tab_cmd[l]; l++)
+			printf("%s\n", new->tab_cmd[l]);
+		new->tab_redirect = NULL;
+	}
 	else
 	{
-
+		char *s;
+		s = ft_strdup(list->str);
+		s = redirect_processing(s, data);
+		free(s);
+		exit(1);
 	}
 
-
-
-
-	return(new);
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/28 17:21:15 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/30 11:09:14 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int main(int argc, char **argv, char **envp)
 	printf("============================\n");
 
 	data.count_commands = data.count_pipe + 1;//количество команд
+	data.exit_code = 1;
 
 	data.envp_list = get_envp_list(envp); //envp сохранили в список
 	 // print_list(&envp_list);
@@ -58,105 +59,24 @@ int main(int argc, char **argv, char **envp)
 	data.arr_envp = envp_list_remake_arr(data.envp_list); //список envp сохранили в массив строк
 
 
-	// t_cmd *commands = NULL;
 	data.commands = push_node_cmd_firs(&data, prepars_list); // еще не завершила. создала только один узел
 
 
-
-	//сделать функцию которая список сохраняет в массив строк
-	//сделать ф-цию которая ищет в среде окружения ключ
-	//заменяет или удаляет из строки
-
-	// change_dollar(commands);
-
-	// char **prepars_arr_str;     //записали список в массив строк
-	// prepars_arr_str = (char **)malloc(sizeof(char*) * (size + 1));
-	// if(!prepars_arr_str)
-	// 	return(1);
-	// int i = 0;
-
-	// while(prepars_list)
-	// {
-	// 	prepars_arr_str[i] = prepars_list->str;
-	// 	i++;
-	// 	prepars_list = prepars_list->next;
-	// }
-	// for(int i = 0; prepars_arr_str[i]; i++)
-	// 	printf("s = %s\n", prepars_arr_str[i]);
-
 	free_list_prepars(&prepars_list);
+
 	free_list(&data.envp_list);
 	for(int i = 0; data.arr_envp[i]; i++)
 		free(data.arr_envp[i]);
 	free(data.arr_envp);
-	free(data.commands->full_str_without_dollar);
+	for(int i = 0; data.commands->tab_cmd[i]; i++)
+		free(data.commands->tab_cmd[i]);
+	free(data.commands->tab_cmd);
+	free(data.commands->argument);
 	free(data.commands->full_str);
-	free(data.commands->cmd);
+	free(data.commands->command);
 	free(data.commands);
 	free(line);
 
-	/*
-	int i;
-	i = 0;
-	int count_semicolon;
-	count_semicolon = 0;
-	int count_pipe;
-	count_pipe = 0;
-
-	while (str[i])        //посчитали сколько в строке ; и |
-	{
-		if (str[i] == ';')
-		{
-			count_semicolon++;
-		}
-		if (str[i] == '|')
-			count_pipe++;
-
-		i++;
-	}
-	printf("str = %s\n", str);
-	printf("count_semicolon = %d; count_pipe = %d\n", count_semicolon, count_pipe);
-	int *arr_index_semicolon;      //создали массив интов индексов  для ;
-	arr_index_semicolon = (int *)malloc(sizeof(int) * count_semicolon);
-	if (!arr_index_semicolon)
-	{
-		printf("Error malloc\n");
-		exit(1);
-	}
-	i = 0;
-	int j;
-	j = 0;
-	while(str[i])                  //внесли в массив индексы ;
-	{
-		if(str[i] == ';')
-		{
-			arr_index_semicolon[j] = i;
-			j++;
-		}
-		i++;
-	}
-	for(int i = 0; i < count_semicolon; i++)
-		printf("%d ", arr_index_semicolon[i]);
-	printf("\n");
-
-	i = 0;
-	int count_single_quote;
-	count_single_quote = 0;
-	int count_double_quote;
-	count_double_quote = 0;
-	while(str[i])
-	{
-		if(str[i] == ';' || str[i] == '|')      //считаем сколько ' и " до первого ; или |
-			break ;
-		if(str[i] == '\'')
-			count_single_quote++;
-		if(str[i] == '\"')
-			count_double_quote++;
-		i++;
-	}
-	printf("count_single_quote = %d; count_double_quote = %d\n", count_single_quote, count_double_quote);
-	if(count_single_quote % 2 || count_double_quote % 2)
-*/
 
 	return (0);
 }

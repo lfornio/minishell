@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/28 11:28:48 by lfornio          ###   ########.fr       */
+/*   Updated: 2021/12/30 18:33:04 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include "libft/libft.h"
 
@@ -35,12 +36,12 @@ typedef struct s_prepars
 typedef struct s_cmd
 {
 	int num_cmd;
-	char *cmd;
+	char *command;
+	char *argument;
 	int redirect_flag;
-	char **tab_redirect;
+	char **tab_redirect; // проверить нужен ли
 	char **tab_cmd;
 	char *full_str;
-	char *full_str_without_dollar;
 	struct s_cmd *next;
 } t_cmd;
 
@@ -51,6 +52,7 @@ typedef struct s_data
 	t_cmd *commands;
 	t_list *envp_list;
 	char **arr_envp;
+	int exit_code;
 }t_data;
 
 
@@ -84,5 +86,14 @@ void print_list(t_list **list);
 char *change_dollar_in_str(char *str, t_data *data);
 char **envp_list_remake_arr(t_list *list);
 t_cmd *push_node_cmd_firs(t_data *data, t_prepars *list);
+char *processing_the_dollar(char *str, int *i, t_data *data);
+char **split_str_whitespace(char *str, t_data *data);
+void push_last_node_prepars(t_prepars **list, char *str);
+char *get_argumens(char *str);
+char *removing_the_quotes(char *str, int *i, char c);
+char *redirect_processing(char *str, t_data *data);
+char *remov(char *str) ;
+int get_redirect_flag(char *str) ;
+char *delete_space(char *str);
 
 #endif
