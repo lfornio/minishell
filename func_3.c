@@ -6,13 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 08:38:00 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/25 10:24:45 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:01:35 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int error_prepars_quote(char *str, char c)   //не закрытые кавычки
+int error_prepars_quote(char *str, char c) //не закрытые кавычки
 {
 	int len;
 	len = ft_strlen(str);
@@ -21,7 +21,16 @@ int error_prepars_quote(char *str, char c)   //не закрытые кавыч�
 	return (0);
 }
 
-void error_prepars_str(t_prepars *prepars_list, char *line) // выход из программы при наличии незакрытых кавычек
+int print_error_for_quotes(char *s, t_prepars *list, char *line) // печатает ошибку если кавычки не закрыты
+{
+	write(2, s, ft_strlen(s));
+	write(2, " quotes are not closed, the string is not valid\n", 48);
+	free_list_prepars(&list);
+	free(line);
+	return (-1);
+}
+
+int error_quote(t_prepars *prepars_list, char *line) // выход из программы при наличии незакрытых кавычек
 {
 	t_prepars *list;
 	list = prepars_list;
@@ -31,23 +40,14 @@ void error_prepars_str(t_prepars *prepars_list, char *line) // выход из �
 		if (prepars_list->str[0] == '\'')
 		{
 			if (error_prepars_quote(prepars_list->str, '\''))
-			{
-				printf("Single quotes are not closed, the string is not valid\n");
-				free_list_prepars(&list);
-				free(line);
-				exit(1);
-			}
+				return(print_error_for_quotes("Single", list, line));
 		}
 		else if (prepars_list->str[0] == '\"')
 		{
 			if (error_prepars_quote(prepars_list->str, '\"'))
-			{
-				printf("Double quotes are not closed, the string is not valid\n");
-				free_list_prepars(&list);
-				free(line);
-				exit(1);
-			}
+				return(print_error_for_quotes("Double", list, line));
 		}
 		prepars_list = prepars_list->next;
 	}
+	return (0);
 }

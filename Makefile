@@ -11,11 +11,13 @@ SRCS		= 	minishell.c \
 				func_9.c \
 				func_10.c \
 				func_11.c \
-				func_12.c
+				func_12.c \
+				prepars_list.c \
+				redirect_output.c
 
 
 CC 			= 	gcc
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	 -g -Wall -Wextra -Werror
 INCLUDES	=	minishell.h
 INC_READLINE	=	-I/Users/$(USER)/.brew/Cellar/readline/8.1.1/include
 LIB_READLINE	=	-L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib
@@ -33,7 +35,7 @@ all : libft $(NAME)
 
 debug: $(OBJS) $(INCLUDE)
 	$(MAKE) -C ./libft
-	$(CC) $(FLAGS)  $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE)  $(LIB_READLINE) -g -o $(NAME)
+	$(CC) $(FLAGS)  $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE) $(LIB_READLINE) -o $(NAME)
 clean :
 	make -C libft clean
 	rm -f $(OBJS)

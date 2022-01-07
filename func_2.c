@@ -6,76 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:14:03 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/29 11:09:51 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/07 11:36:43 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void free_list_prepars(t_prepars **list)     //чистит список препарса
-{
-	t_prepars *p;
-
-	p = NULL;
-	if (!*list)
-		return;
-	while (*list)
-	{
-		p = *list;
-		*list = (*list)->next;
-		free(p->str);
-		free(p);
-	}
-}
-
-void print_list_prepars(t_prepars *list)    //печатает список препарса
-{
-	t_prepars *p;
-	p = list;
-	while (p != NULL)
-	{
-		printf("%s\n", p->str);
-		p = p->next;
-	}
-}
-
-void push_node_prepars(t_prepars **list, char *str) //функция создает 1ый узел для препарсинга
-{
-	t_prepars *new;
-	char *s;
-	s = ft_strdup(str);
-	new = malloc(sizeof(t_prepars));
-	if (!new)
-	{
-		printf("Error malloc\n");
-		exit(1);
-	}
-	new->str = s;
-	new->next = *list;
-	*list = new;
-}
-
-void push_last_node_prepars(t_prepars **list, char *str) //функция добавляет узел в конец списка для препарсинга
-{
-	t_prepars *tmp;
-	char *s;
-	s = ft_strdup(str);
-	tmp = *list;
-	while (tmp->next)
-		tmp = tmp->next;
-
-	t_prepars *new;
-	new = malloc(sizeof(t_prepars));
-	if (!new)
-	{
-		printf("Error malloc\n");
-		exit(1);
-	}
-	new->str = s;
-	new->next = NULL;
-	tmp->next = new;
-}
 
 char *ft_quote(char *str, int *i, char c) // функция обрабатывает  ' и " в строке
 {
@@ -131,6 +68,8 @@ t_prepars *preparsing_str(char *str)   //функция делить строк�
 			tmp = ft_quote(str, &i, '\"');
 		else
 			tmp = ft_non(str, &i);
+		if(!tmp)
+			return (NULL);
 		if (j == 0)
 			push_node_prepars(&prepars_list, tmp);
 		else

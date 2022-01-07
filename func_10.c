@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:08:56 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/26 16:57:14 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:27:15 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,17 @@ t_list *get_envp_list(char **envp) //	считываем окружение и �
 	return (envp_list);
 }
 
-char **envp_list_remake_arr(t_list *list)  //список envp записывает в массив строк
+char **envp_list_remake_arr(t_list *list) //список envp записывает в массив строк
 {
-	int size_envp;
-	size_envp = size_list_envp(list);
 	char **tab;
-	tab = (char **)malloc(sizeof(char *) * (size_envp + 1));
-	if (!tab)
-		return (NULL);
-	int i = 0;
+	int i;
 	char *tmp1;
 	char *tmp2;
 
+	i = 0;
+	tab = (char **)malloc(sizeof(char *) * (size_list_envp(list) + 1));
+	if (!tab)
+		return (NULL);
 	while (list)
 	{
 		tmp1 = ft_strjoin(list->key, "=");
@@ -62,8 +61,6 @@ char **envp_list_remake_arr(t_list *list)  //список envp записыва�
 		i++;
 		list = list->next;
 	}
-	tab[i] =  NULL;
-	// for (int i = 0; tab[i]; i++)
-	// 	printf("%s\n", tab[i]);
-	return(tab);
+	tab[i] = NULL;
+	return (tab);
 }

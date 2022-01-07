@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:42:42 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/23 15:40:38 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/07 16:49:26 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void push_node(t_list **list, char *str) //функция создает 1ый �
 	if (!new)
 	{
 		printf("Error malloc\n");
-		exit(1);
+		return;
+		;
 	}
 	pars_envp_str(new, str);
 	new->next = *list;
@@ -47,7 +48,7 @@ void push_last_node(t_list **list, char *str) //функция добавляе�
 	if (!new)
 	{
 		printf("Error malloc\n");
-		exit(1);
+		return;
 	}
 	pars_envp_str(new, str);
 	new->next = NULL;
@@ -80,4 +81,54 @@ void print_list(t_list **list) //печатает список
 		printf("%s=%s\n", p->key, p->value);
 		p = p->next;
 	}
+}
+
+int found_char_c(char *str, char c) //ищем с
+{
+	int i;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void init_data(t_data *data)
+{
+	data->count_commands = 0;
+	data->count_pipe = 0;
+	data->commands = NULL;
+	data->envp_list = NULL;
+	data->arr_envp = NULL;
+	data->exit_code = 0;
+	data->prepars = NULL;
+}
+
+void complete_data(t_data *data, char **envp)
+{
+	data->count_pipe = count_pipes(data->prepars);			  //посчитали сколько пайпов
+	delete_node_with_pipe(data->prepars);					  //удалили пайпы
+	data->count_commands = data->count_pipe + 1;			  //количество команд
+	data->envp_list = get_envp_list(envp);					  //envp сохранили в список
+	data->arr_envp = envp_list_remake_arr(data->envp_list);	  //список envp сохранили в массив строк
+	data->commands = push_node_cmd_firs(data, data->prepars);
+}
+
+void free_all(t_data *data)
+{
+	free_list_prepars(&data->prepars);
+	free_list(&data->envp_list);
+	for (int i = 0; data->arr_envp[i]; i++)
+		free(data->arr_envp[i]);
+	free(data->arr_envp);
+	for (int i = 0; data->commands->tab_cmd[i]; i++)
+		free(data->commands->tab_cmd[i]);
+	free(data->commands->tab_cmd);
+	free(data->commands->argument);
+	free(data->commands->full_str);
+	free(data->commands->command);
+	free(data->commands);
 }
