@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 12:46:28 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 21:03:15 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/10 11:49:21 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *redirect_processing(char *line, t_data *data, int *flag) // все ред�
 	int len;
 	int i;
 
-	i = -1;
+	i = 0;
 	tmp = NULL;
 	len = ft_strlen(line) - 1;
 	if (line[len] == '>' || line[len] == '<')
@@ -27,35 +27,15 @@ char *redirect_processing(char *line, t_data *data, int *flag) // все ред�
 		free(line);
 		return (NULL);
 	}
-	while (line[++i])
-	{
-		if (line[i] == '>')
-		{
-			tmp = redirect_output(line, data, flag);
-			if (!tmp)
-			{
-				// free(line);
-				return (NULL);
-			}
-
-			break;
-		}
-		// else if(line[i] == '<')
-		// {
-		// 	tmp = redirect_input(line, data, flag);
-		// 	break;
-		// }
-	}
-	while (get_redirect_flag(tmp))
-	{
-		// free(line);
+	while (line[i] && line[i] != '>' && line[i] != '<')
+		i++;
+	if (line[i] == '>')
+		tmp = redirect_output(line, data, flag);
+	else if (line[i] == '<')
+		tmp = redirect_input(line, data, flag);
+	if (!tmp)
+		return (NULL);
+	while (tmp && get_redirect_flag(tmp))
 		tmp = redirect_processing(tmp, data, flag);
-		if (!tmp)
-		{
-			// free(line);
-			break;
-		}
-
-	}
 	return (tmp);
 }

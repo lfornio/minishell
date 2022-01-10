@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 19:56:11 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/10 12:37:51 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char *redirect_output(char *line, t_data *data, int *flag);
 char *redirect_input(char *line, t_data *data, int *flag);
 void free_cmd(t_cmd **list);
 int size_list_redirect(t_redirect *list) ;
-
+void push_last_node_redirect(t_redirect **list, char *str, int fd, int a);
+void push_node_redirect(t_redirect **list, char *str, int fd, int a);
 
 #endif

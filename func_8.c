@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 21:01:42 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/10 11:08:47 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ t_cmd *push_node_cmd_firs(t_data *data, t_prepars *list) //функция соз
 		tmp = redirect_processing(s, data, &flag);
 		if (!tmp)
 		{
-			printf("size = %d\n", size_list_redirect(data->commands->redirect));
 			if (size_list_redirect(data->commands->redirect))
 			{
 				free_redirect(&data->commands->redirect);

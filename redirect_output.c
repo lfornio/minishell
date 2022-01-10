@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 20:59:20 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/10 11:13:15 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ char *processing_a_redirect_out(char *str, t_data *data, int *flag, int i) // >
 		write(2, tmp, ft_strlen(tmp));
 		write(2, ": ", 2);
 		write(2, "ambiguous redirect\n", 19);
+		free(tmp);
+		free(after);
+		free(res);
 		return (NULL);
 	}
 	free(tmp);
@@ -132,6 +135,8 @@ char *processing_a_redirect_out(char *str, t_data *data, int *flag, int i) // >
 	{
 		write(2, "minishell: ", 11);
 		perror(res);
+		free(after);
+		free(res);
 		return(NULL);
 	}
 	if ((*flag) == 0)

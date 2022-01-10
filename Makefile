@@ -13,7 +13,8 @@ SRCS		= 	minishell.c \
 				func_11.c \
 				func_12.c \
 				prepars_list.c \
-				redirect_output.c
+				redirect_output.c \
+				redirect_input.c
 
 
 CC 			= 	gcc
@@ -33,9 +34,6 @@ ${NAME}: $(OBJS) $(INCLUDE)
 
 all : libft $(NAME)
 
-debug: $(OBJS) $(INCLUDE)
-	$(MAKE) -C ./libft
-	$(CC) $(FLAGS)  $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE) $(LIB_READLINE) -o $(NAME)
 clean :
 	make -C libft clean
 	rm -f $(OBJS)
