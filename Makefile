@@ -14,7 +14,10 @@ SRCS		= 	minishell.c \
 				func_12.c \
 				prepars_list.c \
 				redirect_output.c \
-				redirect_input.c
+				redirect_input.c \
+				redirect_input_heredoc.c \
+				redirect_get_fd_in_and_out.c
+
 
 
 CC 			= 	gcc

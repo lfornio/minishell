@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:48:43 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 13:49:58 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:12:19 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char *delete_space(char *str) // удаляем пробелы в начала �
 	return(s);
 }
 
-void removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)  //ищем узлы-строки без пайпов
+int removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)  //ищем узлы-строки без пайпов
 {
 	t_prepars *p;
 
@@ -39,9 +39,14 @@ void removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)  //ище�
 	while(p)
 	{
 		if(p->str[0] != '|')
-			p->str = delete_space(p->str);
+			{
+				p->str = delete_space(p->str);
+				if(!ft_strlen(p->str))
+					return (-1);
+			}
 		p = p->next;
 	}
+	return (0);
 }
 
 int count_pipes(t_prepars *list)  // считаем сколько пайпов

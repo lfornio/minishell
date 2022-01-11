@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/10 11:13:15 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:30:53 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,101 +57,44 @@ void push_node_redirect(t_redirect **list, char *str, int fd, int a) //функ�
 	*list = new;
 	}
 
-int found_name_file(char *str, int *i)
+	int open_name_file_for_write(char *name) // открываем файл для записи
 {
-	if (str[*i] == ' ')
-		(*i)++;
-	if (str[*i] == '>')
-		return (print_error_token(">"));
-	else if (str[*i] == '<')
-		return (print_error_token("<"));
-	else
-	{
-		while (str[*i] && str[*i] != ' ' && str[*i] != '|' && str[*i] != '>' && str[*i] != '<')
-		{
-			if (str[*i] == '\'')
-				skip_the_quotes(str, i, '\'');
-			if (str[*i] == '\"')
-				skip_the_quotes(str, i, '\"');
-			(*i)++;
-		}
-	}
-	return(0);
-}
-
-char *processing_a_redirect_out(char *str, t_data *data, int *flag, int i) // >
-{
-	int a;
-	a = i;
-
-	// if(found_name_file(str, &i) < 0)
-	// 	return (NULL);
-
-	if (str[i] == ' ')
-		i++;
-	if (str[i] == '>' && (print_error_token(">") < 0))
-		{
-			// free(str);
-
-			return (NULL);
-		}
-	else if (str[i] == '<' && (print_error_token("<") < 0))
-		return (NULL);
-	else
-	{
-		while (str[i] && str[i] != ' ' && str[i] != '|' && str[i] != '>' && str[i] != '<')
-		{
-			if (str[i] == '\'')
-				skip_the_quotes(str, &i, '\'');
-			if (str[i] == '\"')
-				skip_the_quotes(str, &i, '\"');
-			i++;
-		}
-	}
-	char *after;
-	after = ft_substr(str, i, ft_strlen(str) - i);
-	char *tmp;
-	if (str[a] == ' ')
-		tmp = ft_substr(str, a + 1, i - a - 1);
-	else
-		tmp = ft_substr(str, a, i - a);
-	char *res;
-	res = change_dollar_in_str(tmp, data);
-	if(!ft_strlen(res))
-	{
-		write(2, "minishell: ", 11);
-		write(2, tmp, ft_strlen(tmp));
-		write(2, ": ", 2);
-		write(2, "ambiguous redirect\n", 19);
-		free(tmp);
-		free(after);
-		free(res);
-		return (NULL);
-	}
-	free(tmp);
 	int fd;
-	fd = open(res, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		write(2, "minishell: ", 11);
-		perror(res);
-		free(after);
-		free(res);
-		return(NULL);
+		perror(name);
+		free(name);
+		return (-1);
 	}
+	return (fd);
+}
+
+
+char *processing_a_redirect_out(t_cmd *node, char *str, t_data *data, int *flag, int i) // >
+{
+	int		a;
+	int		fd;
+	char	*name;
+	char	*after;
+
+	a = i;
+	name = name_file(str, &i, a, data);
+	if (!name || (fd = open_name_file_for_write(name)) < 0)
+		return (NULL);
 	if ((*flag) == 0)
-		push_node_redirect(&data->commands->redirect, res, fd, a);
+		push_node_redirect(&node->redirect, name, fd, a);
 	else
-		push_last_node_redirect(&data->commands->redirect, res, fd, a);
+		push_last_node_redirect(&node->redirect, name, fd, a);
 	(*flag)++;
-
-	free(res);
-	// close(fd);
-
+	free (name);
+	after = ft_substr(str, i, ft_strlen(str) - i);
 	return (after);
 }
 
-char *redirect_output(char *line, t_data *data, int *flag)
+char *redirect_output(t_cmd *node, char *line, t_data *data, int *flag)
 {
 	char *tmp;
 	char *before;
@@ -164,9 +107,9 @@ char *redirect_output(char *line, t_data *data, int *flag)
 	tmp = ft_strchr(line, '>');
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(tmp));
 	if (ft_strnstr(tmp, ">>", 2))
-		after = processing_a_redirect_out(tmp, data, flag, REDIRECT_OUTPUT_TWO);
+		after = processing_a_redirect_out(node, tmp, data, flag, REDIRECT_OUTPUT_TWO);
 	else
-		after = processing_a_redirect_out(tmp, data, flag, REDIRECT_OUTPUT_ONE);
+		after = processing_a_redirect_out(node, tmp, data, flag, REDIRECT_OUTPUT_ONE);
 	if(!after)
 	{
 		// free(tmp);

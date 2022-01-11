@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:36:18 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 18:00:08 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:11:23 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int preparsing(t_data *data, char *line)
 	if (search_for_pipes(prepars_list) < 0)
 		return (-1);
 	gluing_strings_without_pipe(prepars_list);					   // скдеили строки без |
-	removing_spaces_at_the_beginning_and_end_in_str(prepars_list); //удалили пробелы в начале и конце каждой строки
+	if(removing_spaces_at_the_beginning_and_end_in_str(prepars_list) < 0)//удалили пробелы в начале и конце каждой строки
+		return(-1);
 	if (error_last_pipe(prepars_list) < 0)
 		return (-1); // удаляет последний пустой узел и ошибка если последний узкл - пайп
 	return (0);

@@ -6,13 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:58:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/10 16:06:06 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:34:08 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void skip_name_file(char *str, int *i)
+void skip_name_file(char *str, int *i) //вычленяем имя источника
 {
 
 	while (str[*i] && str[*i] != ' ' && str[*i] != '|' && str[*i] != '>' && str[*i] != '<')
@@ -25,7 +25,7 @@ void skip_name_file(char *str, int *i)
 	}
 }
 
-char *get_name_file(char *str, int *i, int a, t_data *data)
+char *get_name_file(char *str, int *i, int a, t_data *data) //берем имя источника
 {
 	char *name_file;
 	char *tmp;
@@ -49,7 +49,7 @@ char *get_name_file(char *str, int *i, int a, t_data *data)
 	return (name_file);
 }
 
-int open_name_file(char *name)
+int open_name_file_for_read(char *name) //открываем файл для чтения
 {
 	int fd;
 
@@ -61,21 +61,20 @@ int open_name_file(char *name)
 		free(name);
 		return (-1);
 	}
-	return (0);
+	return (fd);
 }
 
-
-char *processing_a_redirect_heredoc(char *str, t_data *data, int *flag, int i)
+char *name_file(char *str, int *i, int a, t_data *data)
 {
-	int a;
-	int b;
-	int c;
-	a = data->count_pipe;
-	b = *flag;
-	c = i;
-	return (str);
+	char *name;
+
+	if (founding_name_file(str, i) < 0)
+		return (NULL);
+	name = get_name_file(str, i, a, data);
+	return (name);
 }
-int founding_name_file(char *str, int *i)
+
+int founding_name_file(char *str, int *i) // ищем имя источника
 {
 	if (str[*i] == ' ')
 		(*i)++;
@@ -86,36 +85,29 @@ int founding_name_file(char *str, int *i)
 	return (0);
 }
 
-char	*processing_a_redirect_in(char *str, t_data *data, int *flag, int i)
+char *processing_a_redirect_in(t_cmd *node, char *str, t_data *data, int *flag, int i)
 {
-	int		a;
-	int		fd;
-	char	*name;
-	char	*after;
+	int a;
+	int fd;
+	char *name;
+	char *after;
 
 	i -= 2;
 	a = i;
-	if (founding_name_file(str, &i) < 0)
-		return (NULL);
-	name = get_name_file(str, &i, a, data);
-	if (!name)
-		return (NULL);
-	fd = open_name_file(name);
-	if (fd == -1)
+	name = name_file(str, &i, a, data);
+	if (!name || (fd = open_name_file_for_read(name)) < 0)
 		return (NULL);
 	if ((*flag) == 0)
-		push_node_redirect(&data->commands->redirect, name,
-			fd, REDIRECT_INPUT_ONE);
+		push_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_ONE);
 	else
-		push_last_node_redirect(&data->commands->redirect, name,
-			fd, REDIRECT_INPUT_ONE);
+		push_last_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_ONE);
 	(*flag)++;
+	free(name);
 	after = ft_substr(str, i, ft_strlen(str) - i);
-	free (name);
 	return (after);
 }
 
-char *redirect_input(char *line, t_data *data, int *flag)
+char *redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
 {
 	char *tmp;
 	char *before;
@@ -128,9 +120,9 @@ char *redirect_input(char *line, t_data *data, int *flag)
 	tmp = ft_strchr(line, '<');
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(tmp));
 	if (ft_strnstr(tmp, "<<", 2))
-		after = processing_a_redirect_heredoc(tmp, data, flag, REDIRECT_INPUT_TWO);
+		after = processing_a_redirect_heredoc(node, tmp, data, flag, REDIRECT_INPUT_TWO);
 	else
-		after = processing_a_redirect_in(tmp, data, flag, REDIRECT_INPUT_ONE);
+		after = processing_a_redirect_in(node, tmp, data, flag, REDIRECT_INPUT_ONE);
 	if (!after)
 	{
 		// free(tmp);

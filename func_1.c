@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:42:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 16:49:26 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:27:41 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,31 @@ void init_data(t_data *data)
 
 void complete_data(t_data *data, char **envp)
 {
-	data->count_pipe = count_pipes(data->prepars);			  //посчитали сколько пайпов
-	delete_node_with_pipe(data->prepars);					  //удалили пайпы
-	data->count_commands = data->count_pipe + 1;			  //количество команд
-	data->envp_list = get_envp_list(envp);					  //envp сохранили в список
-	data->arr_envp = envp_list_remake_arr(data->envp_list);	  //список envp сохранили в массив строк
-	data->commands = push_node_cmd_firs(data, data->prepars);
+	int flag;
+	flag = 0;
+	data->count_pipe = count_pipes(data->prepars);			//посчитали сколько пайпов
+	delete_node_with_pipe(data->prepars);					//удалили пайпы
+	data->count_commands = data->count_pipe + 1;			//количество команд
+	data->envp_list = get_envp_list(envp);					//envp сохранили в список
+	data->arr_envp = envp_list_remake_arr(data->envp_list); //список envp сохранили в массив строк
+	t_prepars *ptr;
+	ptr = data->prepars;
+	while (ptr)
+	{
+		if (flag == 0)
+		{
+			if (push_node_cmd_firs(&data->commands, ptr, data) < 0)
+				return;
+
+		}
+		else
+		{
+			push_last_node_cmd_firs(&data->commands, ptr, data, flag);
+
+		}
+		flag++;
+		ptr = ptr->next;
+	}
 }
 
 void free_all(t_data *data)
