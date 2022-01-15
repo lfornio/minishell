@@ -6,11 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:31:51 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 19:49:40 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int g_status;
 
 void no_redirect_flag(t_cmd *node, char *str, t_data *data)
 {
@@ -20,31 +22,37 @@ void no_redirect_flag(t_cmd *node, char *str, t_data *data)
 	node->command = get_command_from_str(s);
 	node->argument = get_argumens(s);
 	node->tab_cmd = split_str_whitespace(str, data);
-	node->redirect = NULL;
-	node->name_file_heredoc = NULL;
-
 	free(s);
 }
 
 int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
 {
-		char *s;
-		char *tmp;
-		s = ft_strdup(str);
-
-		tmp = redirect_processing(node, s, data, flag);
-		if (!tmp)
-			return (-1);
-		s = change_dollar_in_str(tmp, data);
-		node->command = get_command_from_str(s);
-		node->argument = get_argumens(s);
-
-		free(s);
-		node->tab_cmd = split_str_whitespace(tmp, data);
+	char *s;
+	char *tmp;
+	s = ft_strdup(str);
+	print_data(data);
+	tmp = redirect_processing(node, s, data, flag);
+	print_data(data);
+	if(!data->commands->command)
+	{
 		free(tmp);
-		get_fd_in_and_out_for_redirect(node, data);
-		return (0);
+		return(-1);
+	}
+	if (!tmp)
+	{
+		free(s);
+		return (-1);
+	}
 
+	s = change_dollar_in_str(tmp, data);
+	node->command = get_command_from_str(s);
+	node->argument = get_argumens(s);
+
+	free(s);
+	node->tab_cmd = split_str_whitespace(tmp, data);
+	free(tmp);
+	get_fd_in_and_out_for_redirect(node, data);
+	return (0);
 }
 
 int size_list_redirect(t_redirect *list) //функция считает размер списка redirect
@@ -121,6 +129,21 @@ int get_redirect_flag(char *str) //берем флаг редиректа
 	return (0);
 }
 
+void init_cmd(t_cmd *list)
+{
+	list->num_cmd = 0;
+	list->command = NULL;
+	list->argument = NULL;
+	list->tab_cmd = NULL;
+	list->redirect_flag = 0;
+	list->redirect = NULL;
+	list->name_file_heredoc = NULL;
+	list->fd_heredoc = 0;
+	list->fd_in = 0;
+	list->fd_out = 0;
+	list->full_str = NULL;
+}
+
 int push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data) //функция создает 1ый узел в списке команд
 {
 
@@ -130,54 +153,21 @@ int push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data) //фун
 
 	new = malloc(sizeof(t_cmd));
 	if (!new)
-	{
-		printf("Error malloc\n");
 		return (-1);
-	}
 	new->next = *commands;
 	*commands = new;
 
-	new->num_cmd = 0;
+	init_cmd(new);
+
 	new->full_str = ft_strdup(list->str);
 	new->redirect_flag = get_redirect_flag(list->str);
-	new->fd_heredoc = 0;
-	new->fd_in = 0;
-	new->fd_out = 0;
-
 	if (!new->redirect_flag)
 		no_redirect_flag(new, list->str, data);
 	else
 	{
-		if(yes_redirect_flag(new, list->str, data, &flag) < 0)
-		{
-			if (size_list_redirect(new->redirect))
-				free_redirect(&new->redirect);
-			free(new->full_str);
-			free(new);
-			return(-1);
-		}
+		if (yes_redirect_flag(new, list->str, data, &flag) < 0)
+			return (-1);
 	}
-	printf("num_cmd = %d\n", new->num_cmd);
-	printf("command = %s\n", new->command);
-	printf("argument = %s\n", new->argument);
-	for (int l = 0; new->tab_cmd[l]; l++)
-		printf("%s\n", new->tab_cmd[l]);
-	printf("redirect_flag = %d\n", new->redirect_flag);
-	t_redirect *p;
-	p = new->redirect;
-	while (p)
-	{
-		printf("id = %d, fd = %d, name = %s, str = %s\n", p->id, p->fd, p->name, p->str);
-		p = p->next;
-	}
-	printf("name_file_heredoc = %s\n", new->name_file_heredoc);
-	printf("fd_heredoc = %d\n", new->fd_heredoc);
-	printf("fd_in = %d\n", new->fd_in);
-	printf("fd_out = %d\n", new->fd_out);
-	printf("full_str = %s\n", new->full_str);
-	printf("+++++++++++++++++++++++++++++++++\n");
-
-
 	return (0);
 }
 
@@ -198,47 +188,25 @@ int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int
 		printf("Error malloc\n");
 		return (-1);
 	}
-new->next = NULL;
+	new->next = NULL;
 	tmp->next = new;
+	init_cmd(new);
+
 	new->num_cmd = num;
 	new->full_str = ft_strdup(list->str);
 	new->redirect_flag = get_redirect_flag(list->str);
-	new->fd_heredoc = 0;
-	new->fd_in = 0;
-	new->fd_out = 0;
 	if (!new->redirect_flag)
 		no_redirect_flag(new, list->str, data);
 	else
 	{
-		if(yes_redirect_flag(new, list->str, data, &flag) < 0)
+		if (yes_redirect_flag(new, list->str, data, &flag) < 0)
 		{
 			if (size_list_redirect(new->redirect))
 				free_redirect(&new->redirect);
 			free(new->full_str);
 			free(new);
-			return(-1);
+			return (-1);
 		}
 	}
-	printf("num_cmd = %d\n", new->num_cmd);
-	printf("command = %s\n", new->command);
-	printf("argument = %s\n", new->argument);
-	for (int l = 0; new->tab_cmd[l]; l++)
-		printf("%s\n", new->tab_cmd[l]);
-	printf("redirect_flag = %d\n", new->redirect_flag);
-	t_redirect *p;
-	p = new->redirect;
-	while (p)
-	{
-		printf("id = %d, fd = %d, name = %s, str = %s\n", p->id, p->fd, p->name, p->str);
-		p = p->next;
-	}
-	printf("name_file_heredoc = %s\n", new->name_file_heredoc);
-	printf("fd_heredoc = %d\n", new->fd_heredoc);
-	printf("fd_in = %d\n", new->fd_in);
-	printf("fd_out = %d\n", new->fd_out);
-	printf("full_str = %s\n", new->full_str);
-	printf("+++++++++++++++++++++++++++++++++\n");
-
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 10:10:45 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/29 16:08:27 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:39:54 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char **split_str_whitespace(char *str, t_data *data) //делит строку �
 		ptr = ptr->next;
 		free(tmp);
 	}
+	error_last_pipe(split_whitespace);
 	// print_list_prepars(split_whitespace);
 	char **tab = NULL;
 	tab = prepars_list_remake_arr(split_whitespace);

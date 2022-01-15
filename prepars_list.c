@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:36:18 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:11:23 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 15:32:10 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ int preparsing(t_data *data, char *line)
 	prepars_list = preparsing_str(line);
 	data->prepars = prepars_list;
 	if (!prepars_list)
-		return (-1); //создали список для препарса
-	if (error_quote(prepars_list, line) < 0) // незакрытые кавычки
-		{
-			return (-1);
-		}
+		return (-1);				   //создали список для препарса
+	if (error_quote(prepars_list) < 0) // незакрытые кавычки
+		return (-1);
 	removing_spaces_and_tabs_in_list(prepars_list);
 	if (search_for_pipes(prepars_list) < 0)
 		return (-1);
-	gluing_strings_without_pipe(prepars_list);					   // скдеили строки без |
-	if(removing_spaces_at_the_beginning_and_end_in_str(prepars_list) < 0)//удалили пробелы в начале и конце каждой строки
-		return(-1);
+	gluing_strings_without_pipe(prepars_list); // скдеили строки без |
+	if (removing_spaces_at_the_beginning_and_end_in_str(prepars_list) < 0) //удалили пробелы в начале и конце каждой строки
+		return (-1);
+
 	if (error_last_pipe(prepars_list) < 0)
 		return (-1); // удаляет последний пустой узел и ошибка если последний узкл - пайп
 	return (0);
@@ -46,7 +45,8 @@ void free_list_prepars(t_prepars **list) //чистит список препа�
 	{
 		p = *list;
 		*list = (*list)->next;
-		free(p->str);
+		if (p->str)
+			free(p->str);
 		free(p);
 	}
 }

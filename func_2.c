@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:14:03 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:06:31 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:29:58 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char *ft_quote(char *str, int *i, char c) // функция обрабатыва
 	return (tmp);
 }
 
-char *ft_non(char *str, int *i)    //функция обрабатывает символы отличные от  ' "
+char *ft_non(char *str, int *i) //функция обрабатывает символы отличные от  ' "
 {
 	int a;
 	int count;
@@ -53,7 +53,7 @@ char *ft_non(char *str, int *i)    //функция обрабатывает с�
 	return (tmp);
 }
 
-t_prepars *preparsing_str(char *str)   //функция делить строку на список разделенный на "" ''  символы
+t_prepars *preparsing_str(char *str) //функция делить строку на список разделенный на "" ''  символы
 {
 	int i = 0;
 	char *tmp;
@@ -68,7 +68,7 @@ t_prepars *preparsing_str(char *str)   //функция делить строк�
 			tmp = ft_quote(str, &i, '\"');
 		else
 			tmp = ft_non(str, &i);
-		if(!tmp)
+		if (!tmp)
 			return (NULL);
 		if (j == 0)
 			push_node_prepars(&prepars_list, tmp);
@@ -81,18 +81,17 @@ t_prepars *preparsing_str(char *str)   //функция делить строк�
 	return (prepars_list);
 }
 
-int size_list_prepars(t_prepars *list)  //функция считает размер списка препарса
+int size_list_prepars(t_prepars *list) //функция считает размер списка препарса
 {
 	int count;
 	count = 0;
 
-	if(!list)
-		return(-1);
-	while(list)
+	if (!list)
+		return (-1);
+	while (list)
 	{
 		count++;
 		list = list->next;
 	}
-	return(count);
-
+	return (count);
 }

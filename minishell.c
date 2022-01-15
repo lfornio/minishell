@@ -6,11 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:14:08 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:45:37 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_status = 0;
 
 int main(int argc, char **argv, char **envp)
 {
@@ -22,35 +24,39 @@ int main(int argc, char **argv, char **envp)
 	char *s;
 	s = argv[0];
 	t_data data;
-	init_data(&data);
+	global_status = 0;
+
+	printf("global_status_init = %d\n", global_status);
 	char *line;
 	while (1)
 	{
+		init_data(&data);
 		line = readline("\001\033[32m\002minishell> \001\033[0m\002");
 		add_history(line);
+		print_data(&data);
 		if (preparsing(&data, line) < 0)
 		{
-			if (!data.prepars)
-			{
-				free_list_prepars(&data.prepars);
-				free(line);
-			}
-			continue;
-		}
-		print_list_prepars(data.prepars);
-		printf("============================\n");
-		complete_data(&data, envp);
-		if (!data.commands)
-		{
-			free_list_prepars(&data.prepars);
-			free_list(&data.envp_list);
-			for (int i = 0; data.arr_envp[i]; i++)
-				free(data.arr_envp[i]);
-			free(data.arr_envp);
+			printf("global_status_1 = %d\n", global_status);
+			free_all(&data);
 			free(line);
 			continue;
 		}
+		// print_list_prepars(data.prepars);
+		printf("============================\n");
+		print_data(&data);
+		if(complete_data(&data, envp) < 0)
+		{
+			printf("global_status_2 = %d\n", global_status);
+			free_all(&data);
+			free(line);
+			continue;
+		}
+		print_data(&data);
+		global_status = 0;
+		printf("global_status_norm = %d\n", global_status);
 		free_all(&data);
+		// printf("1-----------1\n");
+		// print_data(&data);
 		free(line);
 	}
 	return (0);

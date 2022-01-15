@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:42:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:27:41 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 18:17:59 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,6 @@ void push_last_node(t_list **list, char *str) //функция добавляе�
 	tmp->next = new;
 }
 
-void free_list(t_list **list) // удаляет список
-{
-	t_list *p;
-
-	p = NULL;
-	if (!*list)
-		return;
-	while (*list)
-	{
-		p = *list;
-		*list = (*list)->next;
-		free(p->key);
-		free(p->value);
-		free(p);
-	}
-}
-
 void print_list(t_list **list) //печатает список
 {
 	t_list *p;
@@ -107,10 +90,18 @@ void init_data(t_data *data)
 	data->prepars = NULL;
 }
 
-void complete_data(t_data *data, char **envp)
+int complete_data(t_data *data, char **envp)
 {
 	int flag;
 	flag = 0;
+	// printf("count_com = %d\n", data->count_commands);
+	// printf("count_pipe = %d\n", data->count_pipe);
+	// printf("commands_list = %p\n", data->commands);
+	// printf("envp_list = %p\n", data->envp_list);
+	// printf("envp_arr = %p\n", data->arr_envp);
+	// printf("exit_code = %d\n", data->exit_code);
+	// printf("prepars = %p\n", data->prepars);
+
 	data->count_pipe = count_pipes(data->prepars);			//посчитали сколько пайпов
 	delete_node_with_pipe(data->prepars);					//удалили пайпы
 	data->count_commands = data->count_pipe + 1;			//количество команд
@@ -123,31 +114,13 @@ void complete_data(t_data *data, char **envp)
 		if (flag == 0)
 		{
 			if (push_node_cmd_firs(&data->commands, ptr, data) < 0)
-				return;
-
+				return(-1);
 		}
 		else
-		{
 			push_last_node_cmd_firs(&data->commands, ptr, data, flag);
-
-		}
 		flag++;
 		ptr = ptr->next;
 	}
+	return(0);
 }
 
-void free_all(t_data *data)
-{
-	free_list_prepars(&data->prepars);
-	free_list(&data->envp_list);
-	for (int i = 0; data->arr_envp[i]; i++)
-		free(data->arr_envp[i]);
-	free(data->arr_envp);
-	for (int i = 0; data->commands->tab_cmd[i]; i++)
-		free(data->commands->tab_cmd[i]);
-	free(data->commands->tab_cmd);
-	free(data->commands->argument);
-	free(data->commands->full_str);
-	free(data->commands->command);
-	free(data->commands);
-}

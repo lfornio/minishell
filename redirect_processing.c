@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_12.c                                          :+:      :+:    :+:   */
+/*   redirect_processing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/30 12:46:28 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 14:27:33 by lfornio          ###   ########.fr       */
+/*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
+/*   Updated: 2022/01/15 18:16:01 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // Ð
 	if (line[len] == '>' || line[len] == '<')
 	{
 		print_error_token("newline");
-		free(line);
+		// free(line);
 		return (NULL);
 	}
 	while (line[i] && line[i] != '>' && line[i] != '<')
@@ -39,3 +39,4 @@ char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // Ð
 		tmp = redirect_processing(node, tmp, data, flag);
 	return (tmp);
 }
+

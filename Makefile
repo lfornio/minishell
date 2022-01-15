@@ -11,12 +11,14 @@ SRCS		= 	minishell.c \
 				func_9.c \
 				func_10.c \
 				func_11.c \
-				func_12.c \
 				prepars_list.c \
 				redirect_output.c \
 				redirect_input.c \
 				redirect_input_heredoc.c \
-				redirect_get_fd_in_and_out.c
+				redirect_get_fd_in_and_out.c \
+				print_data.c \
+				redirect_processing.c \
+				free_all_struct_data.c
 
 
 

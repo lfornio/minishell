@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:58:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 14:34:08 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 20:03:17 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int founding_name_file(char *str, int *i) // ищем имя источника
 		return (-1);
 	else
 		skip_name_file(str, i);
+	// if(str[*i] && (str[*i] == '>' || str[*i] == '<'))
+	// 	return(1);
 	return (0);
 }
 
@@ -96,7 +98,10 @@ char *processing_a_redirect_in(t_cmd *node, char *str, t_data *data, int *flag, 
 	a = i;
 	name = name_file(str, &i, a, data);
 	if (!name || (fd = open_name_file_for_read(name)) < 0)
+	{
+		global_status = 1;
 		return (NULL);
+	}
 	if ((*flag) == 0)
 		push_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_ONE);
 	else
@@ -126,7 +131,7 @@ char *redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
 	if (!after)
 	{
 		// free(tmp);
-		free(line);
+		// free(line);
 		free(before);
 		return (p);
 	}

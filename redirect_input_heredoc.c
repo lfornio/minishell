@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 14:33:18 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:00:13 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int get_fd_file_heredoc(t_data *data, char *name)
 	int fd;
 	data->commands->name_file_heredoc = ft_strdup(".file");
 	fd = open_name_file_for_write(data->commands->name_file_heredoc);
+	printf("fd = %d\n", fd);
 	if (fd == -1)
 		return (-1);
 	write_in_file_heredoc(name, fd);

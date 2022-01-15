@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:48:43 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:12:19 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:07:03 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ int removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)  //ищем
 		if(p->str[0] != '|')
 			{
 				p->str = delete_space(p->str);
-				if(!ft_strlen(p->str))
+				if(!ft_strlen(p->str) && size_list_prepars(list) == 1)
+				{
+					global_status = 0;
 					return (-1);
+				}
+
 			}
 		p = p->next;
 	}

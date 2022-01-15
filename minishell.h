@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/11 15:28:18 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 17:03:19 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #define REDIRECT_INPUT_ONE 3
 #define REDIRECT_INPUT_TWO 4
 
+int global_status;
+
 typedef struct s_list
 {
 	char *key;
@@ -41,7 +43,7 @@ typedef struct s_prepars
 
 typedef struct s_redirect
 {
-	char *str;
+	// char *str;
 	char *name;
 	int fd;
 	int id;
@@ -90,7 +92,7 @@ void free_list_prepars(t_prepars **list);
 void print_list_prepars(t_prepars *list);
 int error_prepars_single_quote(char *str);
 int error_prepars_double_quote(char *str);
-int error_quote(t_prepars *prepars_list, char *line);
+int error_quote(t_prepars *prepars_list);
 int size_list_prepars(t_prepars *list);
 int size_list_envp(t_list *list);
 void removing_spaces_and_tabs_in_list(t_prepars *list);
@@ -125,7 +127,7 @@ int found_char_c(char *str, char c);
 t_prepars *delete_node_prepars(t_prepars *p, t_prepars *head);
 char *get_str_from_list(t_prepars *list, int index);
 int preparsing(t_data *data, char *line);
-void complete_data(t_data *data, char **envp);
+int complete_data(t_data *data, char **envp);
 void free_all(t_data *data);
 char *redirect_output(t_cmd *node, char *line, t_data *data, int *flag);
 char *redirect_input(t_cmd *node, char *line, t_data *data, int *flag);
@@ -144,5 +146,8 @@ void get_fd_in_and_out_for_redirect(t_cmd *node, t_data *data);
 char *get_command_from_str(char *str);
 void free_redirect(t_redirect **list);
 int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int num);
+int print_error_for_quotes(void);
+void print_data(t_data *data);
+void free_list_commands(t_cmd **list);
 
 #endif

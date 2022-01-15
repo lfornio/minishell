@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:10:40 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 16:24:43 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/15 14:19:15 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ int error_last_pipe(t_prepars *list) // если последний узел п�
 	size = size_list_prepars(p);
 	s = get_str_from_list(p, size);
 	if (ft_strncmp(s, "|", 1) == 0)
-		return (print_error_token("|"));
+		return (print_error_for_quotes());
 	return (0);
 }
