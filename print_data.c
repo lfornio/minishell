@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:04:11 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 17:30:01 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 07:35:19 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void print_list_commands(t_cmd *list) //печатает список препа
 		}
 		printf("fd_heredoc = %d\n", p->fd_heredoc);
 		printf("\033[36mfd_in = %d\033[0m\n", p->fd_in);
+		printf("\033[36mflag_fd_in = %d\033[0m\n", p->flag_fd_in);
 		printf("\033[36mfd_out = %d\033[0m\n", p->fd_out);
+		printf("\033[36mflag_fd_out = %d\033[0m\n", p->flag_fd_out);
 		printf("full_str = %s\n", p->full_str);
 		p = p->next;
 	}

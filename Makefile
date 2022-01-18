@@ -18,7 +18,10 @@ SRCS		= 	minishell.c \
 				redirect_get_fd_in_and_out.c \
 				print_data.c \
 				redirect_processing.c \
-				free_all_struct_data.c
+				free_all_struct_data.c \
+				processing.c \
+				command_execution.c \
+				builtins.c
 
 
 

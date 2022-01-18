@@ -24,9 +24,15 @@ void take_fd_from_last_node_list(t_cmd *node, t_redirect *list, int index)
 		p = p->next;
 	}
 	if (p->id == REDIRECT_INPUT_ONE || p->id == REDIRECT_INPUT_TWO)
-		node->fd_in = p->fd;
+		{
+			node->fd_in = p->fd;
+			node->flag_fd_in = p->id;
+		}
 	else if (p->id == REDIRECT_OUTPUT_ONE || p->id == REDIRECT_OUTPUT_TWO)
-		node->fd_out = p->fd;
+		{
+			node->fd_out = p->fd;
+			node->flag_fd_out = p->id;
+		}
 }
 
 int get_fd(t_redirect *list, int a, int b)

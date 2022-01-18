@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 17:03:19 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:17:54 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_prepars
 
 typedef struct s_redirect
 {
-	// char *str;
 	char *name;
 	int fd;
 	int id;
@@ -61,7 +60,9 @@ typedef struct s_cmd
 	char *name_file_heredoc;
 	int fd_heredoc;
 	int fd_in;
+	int flag_fd_in;
 	int fd_out;
+	int flag_fd_out;
 	char *full_str;
 	struct s_cmd *next;
 } t_cmd;
@@ -149,5 +150,11 @@ int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int
 int print_error_for_quotes(void);
 void print_data(t_data *data);
 void free_list_commands(t_cmd **list);
+void init_cmd(t_cmd *list);
+int processing(t_data *data);
+void print_list_commands(t_cmd *list);
+int command_execution(t_data *data, int flag_for_fork, int **fd);
+int builtins_command_execut(t_data *data, t_cmd *list);
+int builtins_command(char *str);
 
 #endif

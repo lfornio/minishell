@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 19:49:40 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 07:41:18 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
 	print_data(data);
 	tmp = redirect_processing(node, s, data, flag);
 	print_data(data);
-	if(!data->commands->command)
+	if(!ft_strlen(tmp))
 	{
 		free(tmp);
 		return(-1);
@@ -140,7 +140,9 @@ void init_cmd(t_cmd *list)
 	list->name_file_heredoc = NULL;
 	list->fd_heredoc = 0;
 	list->fd_in = 0;
+	list->flag_fd_in = 0;
 	list->fd_out = 0;
+	list->flag_fd_out = 0;
 	list->full_str = NULL;
 }
 

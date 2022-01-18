@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:42:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 18:17:59 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 07:37:37 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,6 @@ int complete_data(t_data *data, char **envp)
 {
 	int flag;
 	flag = 0;
-	// printf("count_com = %d\n", data->count_commands);
-	// printf("count_pipe = %d\n", data->count_pipe);
-	// printf("commands_list = %p\n", data->commands);
-	// printf("envp_list = %p\n", data->envp_list);
-	// printf("envp_arr = %p\n", data->arr_envp);
-	// printf("exit_code = %d\n", data->exit_code);
-	// printf("prepars = %p\n", data->prepars);
 
 	data->count_pipe = count_pipes(data->prepars);			//посчитали сколько пайпов
 	delete_node_with_pipe(data->prepars);					//удалили пайпы

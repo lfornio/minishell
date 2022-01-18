@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 18:45:37 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:41:35 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int main(int argc, char **argv, char **envp)
 	char *s;
 	s = argv[0];
 	t_data data;
+	// t_cmd command_for_fork;echo
+	// init_cmd(&command_for_fork);
+
 	global_status = 0;
 
 	printf("global_status_init = %d\n", global_status);
@@ -33,7 +36,7 @@ int main(int argc, char **argv, char **envp)
 		init_data(&data);
 		line = readline("\001\033[32m\002minishell> \001\033[0m\002");
 		add_history(line);
-		print_data(&data);
+		// print_data(&data);
 		if (preparsing(&data, line) < 0)
 		{
 			printf("global_status_1 = %d\n", global_status);
@@ -43,7 +46,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		// print_list_prepars(data.prepars);
 		printf("============================\n");
-		print_data(&data);
+		// print_data(&data);
 		if(complete_data(&data, envp) < 0)
 		{
 			printf("global_status_2 = %d\n", global_status);
@@ -51,7 +54,14 @@ int main(int argc, char **argv, char **envp)
 			free(line);
 			continue;
 		}
-		print_data(&data);
+		// print_data(&data);
+		int a;
+		a = processing(&data);
+
+
+
+
+
 		global_status = 0;
 		printf("global_status_norm = %d\n", global_status);
 		free_all(&data);
