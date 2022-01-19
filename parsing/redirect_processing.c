@@ -6,14 +6,15 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 18:16:01 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:01:20 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // все редиректы обрабатываем - рекурсия
 {
+	printf("ptr_line = %p\n", line);
 	char *tmp;
 	int len;
 	int i;

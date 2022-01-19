@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:17:21 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 18:20:15 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:01:07 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void free_list_redirect(t_redirect **list) //чистит список редиректа
 {

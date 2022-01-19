@@ -6,23 +6,22 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 07:41:18 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:13:04 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-// int g_status;
-
-void no_redirect_flag(t_cmd *node, char *str, t_data *data)
+int no_redirect_flag(t_cmd *node, char *str, t_data *data)
 {
 	char *s;
 
 	s = change_dollar_in_str(str, data);
 	node->command = get_command_from_str(s);
 	node->argument = get_argumens(s);
-	node->tab_cmd = split_str_whitespace(str, data);
+	node->tab_cmd = split_str_whitespace_for_execve(str, data);
 	free(s);
+	return (0);
 }
 
 int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
@@ -30,9 +29,7 @@ int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
 	char *s;
 	char *tmp;
 	s = ft_strdup(str);
-	print_data(data);
 	tmp = redirect_processing(node, s, data, flag);
-	print_data(data);
 	if(!ft_strlen(tmp))
 	{
 		free(tmp);
@@ -43,13 +40,13 @@ int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
 		free(s);
 		return (-1);
 	}
-
+	// free(s);
 	s = change_dollar_in_str(tmp, data);
 	node->command = get_command_from_str(s);
 	node->argument = get_argumens(s);
 
-	free(s);
-	node->tab_cmd = split_str_whitespace(tmp, data);
+	// free(s);
+	node->tab_cmd = split_str_whitespace_for_execve(tmp, data);
 	free(tmp);
 	get_fd_in_and_out_for_redirect(node, data);
 	return (0);
@@ -71,6 +68,7 @@ int size_list_redirect(t_redirect *list) //функция считает раз�
 	}
 	return (count);
 }
+
 void free_redirect(t_redirect **list) // удаляет список redirect
 {
 	t_redirect *p;
@@ -86,6 +84,7 @@ void free_redirect(t_redirect **list) // удаляет список redirect
 		free(p);
 	}
 }
+
 char *get_command_from_str(char *str)
 {
 	char *s;
@@ -101,16 +100,7 @@ char *get_command_from_str(char *str)
 	return (s);
 }
 
-void skip_the_quotes(char *str, int *i, char c) //пропускаем кавычки
-{
-	(*i)++;
-	while (str[*i])
-	{
-		if (str[*i] == c)
-			return;
-		(*i)++;
-	}
-}
+
 
 int get_redirect_flag(char *str) //берем флаг редиректа
 {
@@ -164,7 +154,11 @@ int push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data) //фун
 	new->full_str = ft_strdup(list->str);
 	new->redirect_flag = get_redirect_flag(list->str);
 	if (!new->redirect_flag)
-		no_redirect_flag(new, list->str, data);
+		{
+			if(no_redirect_flag(new, list->str, data) < 0)
+				return (-1);
+		}
+
 	else
 	{
 		if (yes_redirect_flag(new, list->str, data, &flag) < 0)
@@ -198,7 +192,10 @@ int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int
 	new->full_str = ft_strdup(list->str);
 	new->redirect_flag = get_redirect_flag(list->str);
 	if (!new->redirect_flag)
-		no_redirect_flag(new, list->str, data);
+		{
+			if(no_redirect_flag(new, list->str, data) <0)
+				return(-1);
+		}
 	else
 	{
 		if (yes_redirect_flag(new, list->str, data, &flag) < 0)

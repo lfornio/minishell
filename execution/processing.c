@@ -6,13 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 08:09:38 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 11:43:05 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:24:24 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-
+#include "../minishell.h"
 
 int processing(t_data *data)
 {

@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:58:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 20:03:17 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:03:13 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void skip_name_file(char *str, int *i) //вычленяем имя источника
 {

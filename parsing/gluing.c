@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_4.c                                           :+:      :+:    :+:   */
+/*   gluing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 10:17:05 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 13:43:03 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 19:04:54 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-t_prepars *found_str_without_pipe_for_gluing(t_prepars *p, t_prepars *head, int *index)
+t_prepars	*found_str_without_pipe_for_gluing(t_prepars *p,
+	t_prepars *head, int *index)
 {
-	char *s1;
-	char *s2;
-	char *tmp;
+	char	*s1;
+	char	*s2;
+	char	*tmp;
 
 	s1 = get_str_from_list(head, *index);
 	s2 = get_str_from_list(head, *index + 1);
@@ -37,14 +38,18 @@ t_prepars *found_str_without_pipe_for_gluing(t_prepars *p, t_prepars *head, int 
 	return (p);
 }
 
-void gluing_strings_without_pipe(t_prepars *list) //функция склеивает строки без ' и " в списке
+/*
+функция склеивает строки без ' и " в списке
+*/
+void	gluing_strings_without_pipe(t_prepars *list)
 {
-	t_prepars *p;
-	t_prepars *head;
-	p = list;
+	t_prepars	*p;
+	t_prepars	*head;
+	int			index;
 
+	index = 1;
+	p = list;
 	head = list;
-	int index = 1;
 	while (p && p->next)
 		p = found_str_without_pipe_for_gluing(p, head, &index);
 }

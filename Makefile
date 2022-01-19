@@ -1,27 +1,34 @@
 NAME		= 	minishell
 SRCS		= 	minishell.c \
-				func_1.c \
-				func_2.c \
-				func_3.c \
-				func_4.c \
-				func_5.c \
-				func_6.c \
-				func_7.c \
-				func_8.c \
-				func_9.c \
-				func_10.c \
-				func_11.c \
-				prepars_list.c \
-				redirect_output.c \
-				redirect_input.c \
-				redirect_input_heredoc.c \
-				redirect_get_fd_in_and_out.c \
+				parsing/parsing.c \
+				parsing/preparsing.c \
+				parsing/quote.c \
+				parsing/quote_error.c \
+				parsing/prepars_list.c \
+				parsing/prepars_list_2.c \
+				parsing/remove_extra_space.c \
+				parsing/remove_space.c \
+				parsing/gluing.c \
+				parsing/envp.c \
+				parsing/pipe_processing.c \
+				parsing/pipe_processing_2.c \
+				parsing/complete_data.c \
+				parsing/array_for_execve.c \
+				parsing/func_8.c \
+				parsing/func_9.c \
+				parsing/func_10.c \
+				parsing/func_11.c \
+				parsing/redirect_output.c \
+				parsing/redirect_input.c \
+				parsing/redirect_input_heredoc.c \
+				parsing/redirect_get_fd_in_and_out.c \
 				print_data.c \
-				redirect_processing.c \
-				free_all_struct_data.c \
-				processing.c \
-				command_execution.c \
-				builtins.c
+				parsing/redirect_processing.c \
+				parsing/free_all_struct_data.c \
+				execution/execution.c \
+				execution/processing.c \
+				execution/command_execution.c \
+				execution/builtins.c
 
 
 

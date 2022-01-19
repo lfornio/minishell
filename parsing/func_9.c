@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:27:41 by lfornio           #+#    #+#             */
-/*   Updated: 2021/12/29 17:35:29 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/19 08:25:45 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 
 char *get_argumens(char *str)
@@ -57,7 +57,10 @@ char *processing_the_dollar(char *str, int *i, t_data *data) // ищем клю�
 	while (str[*i])
 	{
 		if(str[a] == ' ')
-			break;
+		{
+			free(before_dollar);
+			return(str);
+		}
 		else if(str[a] == '?' || ft_isdigit(str[a]))
 		{
 			(*i)++;
@@ -91,7 +94,7 @@ char *processing_the_dollar(char *str, int *i, t_data *data) // ищем клю�
 		tmp1 = ft_strjoin(before_dollar, val);
 	else if (str[a] == '?')
 	{
-		q = ft_itoa(data->exit_code);
+		q = ft_itoa(global_status);
 		tmp1 = ft_strjoin(before_dollar, q);
 		free(q);
 	}

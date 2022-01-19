@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 19:55:25 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:03:17 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void push_last_node_redirect(t_redirect **list, char *str, int fd, int a) //функция добавляет узел в конец списка
 {

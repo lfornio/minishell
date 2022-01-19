@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 11:51:09 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 12:16:52 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:23:05 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int builtins_command(char *str)
 {

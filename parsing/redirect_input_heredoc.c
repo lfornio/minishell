@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 17:00:13 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:03:09 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char *get_next_line(char **line)
 {

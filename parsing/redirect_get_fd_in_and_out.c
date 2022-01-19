@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void take_fd_from_last_node_list(t_cmd *node, t_redirect *list, int index)
 {
@@ -35,7 +35,7 @@ void take_fd_from_last_node_list(t_cmd *node, t_redirect *list, int index)
 		}
 }
 
-int get_fd(t_redirect *list, int a, int b)
+int get_fd(t_redirect *list, int flag, int a, int b)
 {
 	t_redirect *p;
 	int i;
@@ -43,6 +43,7 @@ int get_fd(t_redirect *list, int a, int b)
 	int *buf;
 
 	p = list;
+	res = 0;
 	i = 0;
 	buf = malloc(sizeof(int) * size_list_redirect(p));
 	if(!buf)
@@ -51,11 +52,16 @@ int get_fd(t_redirect *list, int a, int b)
 	{
 		if(p->id == a || p->id == b)
 		{
-			buf[i] = p->fd;
+			if(flag == 0)
+				buf[i] = p->fd;
+			else
+				buf[i] = p->id;
 			i++;
 		}
 		p = p->next;
 	}
+	if(i == 0)
+		return (0);
 	res = buf[i - 1];
 	free(buf);
 	return(res);
@@ -63,10 +69,18 @@ int get_fd(t_redirect *list, int a, int b)
 
 void take_fd_in_or_out_from_list(t_cmd *node, t_redirect *list)
 {
+	int flag;
+	flag = 0;
 	if (node->fd_in)
-		node->fd_out = get_fd(list, REDIRECT_OUTPUT_ONE, REDIRECT_OUTPUT_TWO);
+		{
+			node->fd_out = get_fd(list, flag, REDIRECT_OUTPUT_ONE, REDIRECT_OUTPUT_TWO);
+			node->flag_fd_out = get_fd(list, flag + 1, REDIRECT_OUTPUT_ONE, REDIRECT_OUTPUT_TWO);
+		}
 	else
-		node->fd_in = get_fd(list, REDIRECT_INPUT_ONE, REDIRECT_INPUT_TWO);
+		{
+			node->fd_in = get_fd(list, flag, REDIRECT_INPUT_ONE, REDIRECT_INPUT_TWO);
+			node->flag_fd_in = get_fd(list, flag + 1, REDIRECT_INPUT_ONE, REDIRECT_INPUT_TWO);
+		}
 }
 
 void close_extra_fd(t_redirect *list, t_data *data)

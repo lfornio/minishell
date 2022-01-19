@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_3.c                                           :+:      :+:    :+:   */
+/*   quote_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 08:38:00 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/15 15:31:28 by lfornio          ###   ########.fr       */
+/*   Created: 2022/01/18 17:06:06 by lfornio           #+#    #+#             */
+/*   Updated: 2022/01/18 17:09:30 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int error_prepars_quote(char *str, char c) //не закрытые кавычки
+/*
+не закрытые кавычки
+*/
+int	error_prepars_quote(char *str, char c)
 {
-	int len;
+	int	len;
+
 	len = ft_strlen(str);
 	if (len == 1 || str[len - 1] != c)
 		return (1);
 	return (0);
 }
 
-int print_error_for_quotes(void) // печатает ошибку если кавычки не закрыты
+/*
+печатает ошибку если кавычки не закрыты
+*/
+int	print_error_for_quotes(void)
 {
 	write(2, "minishell: ", 11);
 	write(2, "syntax error: unexpected end of file\n", 37);
@@ -29,11 +36,14 @@ int print_error_for_quotes(void) // печатает ошибку если ка�
 	return (-1);
 }
 
-int error_quote(t_prepars *prepars_list) // выход из программы при наличии незакрытых кавычек
+/*
+выход из программы при наличии незакрытых кавычек
+*/
+int	error_quote(t_prepars *prepars_list)
 {
-	t_prepars *list;
-	list = prepars_list;
+	t_prepars	*list;
 
+	list = prepars_list;
 	while (prepars_list)
 	{
 		if (prepars_list->str[0] == '\'')
@@ -46,7 +56,6 @@ int error_quote(t_prepars *prepars_list) // выход из программы �
 			if (error_prepars_quote(prepars_list->str, '\"'))
 				return (print_error_for_quotes());
 		}
-
 		prepars_list = prepars_list->next;
 	}
 	return (0);

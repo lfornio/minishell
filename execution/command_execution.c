@@ -6,11 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:11:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 12:18:09 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:23:10 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 t_cmd *take_node_commands_by_index(t_data *data, int index)
 {
 	t_cmd *tmp;

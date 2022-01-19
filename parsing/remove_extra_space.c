@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_5.c                                           :+:      :+:    :+:   */
+/*   remov_extra_space.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:09:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/07 11:03:03 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:32:46 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int count_spaces_and_tabs(char *str, int *i)  //посчитали сколько надо убрать символов из страрой строки чтобы посчитать malloc для новой
+/*
+посчитали сколько надо убрать символов
+из страрой строки чтобы посчитать malloc для новой
+*/
+int	count_spaces_and_tabs(char *str, int *i)
 {
-	int count;
-	int a;
+	int	count;
+	int	a;
 
 	count = 0;
 	a = *i;
 	(*i)++;
-	while(str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
+	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
 	{
 		count++;
 		(*i)++;
 	}
-	return(count);
+	return (count);
 }
 
-void skipping_space(char *str, int *i)  //пропустили в строке пробелы и табуляции
+/*
+пропустили в строке пробелы и табуляции
+*/
+void	skipping_space(char *str, int *i)
 {
 	(*i)++;
-	while(str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
+	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
 		(*i)++;
 }
 
@@ -45,7 +52,7 @@ char	*copy_str_without_extra_spaces(char *str, int count)
 	i = -1;
 	j = 0;
 	len = ft_strlen(str);
-	tmp = malloc(sizeof(char) * (len - count + 1));
+	tmp = (char *)malloc(sizeof(char) * (len - count + 1));
 	if (!tmp)
 		return (NULL);
 	while (str[++i])
@@ -62,31 +69,37 @@ char	*copy_str_without_extra_spaces(char *str, int count)
 	return (tmp);
 }
 
-char *remove_extra_spaces_and_tabs_in_str(char *str)   //убрали из строки лишние пробелы и табуляции
+/*
+убрали из строки лишние пробелы и табуляции
+*/
+char	*remove_extra_spaces_and_tabs_in_str(char *str)
 {
-	int i;
-	int count;
-	char *tmp;
+	int		i;
+	int		count;
+	char	*tmp;
 
 	i = -1;
 	count = 0;
-	while(str[++i])
+	while (str[++i])
 	{
-		if(str[i] == ' ' || str[i] == '\t')
+		if (str[i] == ' ' || str[i] == '\t')
 			count += count_spaces_and_tabs(str, &i);
 	}
 	tmp = copy_str_without_extra_spaces(str, count);
-	return(tmp);
+	return (tmp);
 }
 
-void removing_spaces_and_tabs_in_list(t_prepars *list)   //перезаписали список без пробелов и табуляций
+/*
+перезаписали список без пробелов и табуляций
+*/
+void	removing_spaces_and_tabs_in_list(t_prepars *list)
 {
-	t_prepars *p;
+	t_prepars	*p;
 
 	p = list;
-	while(p)
+	while (p)
 	{
-		if(p->str[0] != '\'' && p->str[0] != '\"')
+		if (p->str[0] != '\'' && p->str[0] != '\"')
 			p->str = remove_extra_spaces_and_tabs_in_str(p->str);
 		p = p->next;
 	}
