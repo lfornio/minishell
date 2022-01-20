@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 08:04:46 by lfornio           #+#    #+#             */
-/*   Updated: 2021/05/11 22:49:51 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 16:24:06 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 int		ft_atoi(const char *str);
 size_t	ft_strlen(const char *str);

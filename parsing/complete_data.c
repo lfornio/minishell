@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:30:25 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/19 14:02:02 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 18:38:01 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	create_cmd(t_data *data)
 		flag++;
 		ptr = ptr->next;
 	}
+
 	return (0);
 }
 
@@ -53,5 +54,6 @@ int	complete_data(t_data *data, char **envp)
 	data->arr_envp = envp_list_remake_arr(data->envp_list);
 	if (create_cmd(data) < 0)
 		return (-1);
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:24:32 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/19 10:29:45 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:58:31 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int execution(t_data *data, char *line)
 	// 	free(line);
 	// 	return (-1);
 	// }
+
 	global_status = 0;
 	free_all(data);
 	free(line);

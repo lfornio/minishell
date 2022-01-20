@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:08:56 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 20:00:46 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:18:07 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void push_node(t_list **list, char *str) //функция создает 1ый �
 {
 	t_list *new;
 	new = malloc(sizeof(t_list));
-	if (!new)
+if (!new)
 	{
-		printf("Error malloc\n");
 		return;
 	}
 	pars_envp_str(new, str);
@@ -37,7 +36,6 @@ void push_last_node(t_list **list, char *str) //функция добавляе�
 	new = malloc(sizeof(t_list));
 	if (!new)
 	{
-		printf("Error malloc\n");
 		return;
 	}
 	pars_envp_str(new, str);

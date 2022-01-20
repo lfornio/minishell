@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/19 16:01:20 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:19:29 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // все редиректы обрабатываем - рекурсия
 {
-	printf("ptr_line = %p\n", line);
 	char *tmp;
 	int len;
 	int i;
@@ -25,7 +24,7 @@ char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // �
 	if (line[len] == '>' || line[len] == '<')
 	{
 		print_error_token("newline");
-		// free(line);
+		free(line);
 		return (NULL);
 	}
 	while (line[i] && line[i] != '>' && line[i] != '<')
@@ -35,9 +34,18 @@ char *redirect_processing(t_cmd *node, char *line, t_data *data, int *flag) // �
 	else if (line[i] == '<')
 		tmp = redirect_input(node, line, data, flag);
 	if (!tmp)
+	{
+		if(line)
+			free(line);
 		return (NULL);
+	}
+
+	free(line);
 	while (tmp && get_redirect_flag(tmp))
+	{
 		tmp = redirect_processing(node, tmp, data, flag);
+	}
+	// free(line);
 	return (tmp);
 }
 

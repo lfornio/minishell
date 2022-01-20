@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 16:34:41 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 16:04:30 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("\001\033[32m\002minishell> \001\033[0m\002");
 		add_history(line);
+		// line = ft_strdup("ls >");
 		if (parsing(&data, line, envp) < 0)
 			continue ;
 		print_data(&data); //убрать потом, печатает основную структуру
 		if (execution(&data, line) < 0)
 			continue ;
+		// close(3);
+		// break;
+		// pause();
 	}
 	return (0);
 }

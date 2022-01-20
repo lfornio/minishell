@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/19 11:12:41 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 19:36:37 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,6 @@ void print_list_commands(t_cmd *list);
 int command_execution(t_data *data, int flag_for_fork, int **fd);
 int builtins_command_execut(t_data *data, t_cmd *list);
 int builtins_command(char *str);
+void close_extra_fd(t_cmd *node, t_redirect *list);
 
 #endif

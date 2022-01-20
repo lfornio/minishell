@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 16:03:09 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:19:10 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,19 @@ void write_in_file_heredoc(char *name, int fd)
 	}
 }
 
-int get_fd_file_heredoc(t_data *data, char *name)
+int get_fd_file_heredoc(t_cmd *node, char *name)
 {
 	int fd;
-	data->commands->name_file_heredoc = ft_strdup(".file");
-	fd = open_name_file_for_write(data->commands->name_file_heredoc);
-	printf("fd = %d\n", fd);
+	node->name_file_heredoc = ft_strdup(".file");
+	fd = open_name_file_for_write(node->name_file_heredoc);
 	if (fd == -1)
 		return (-1);
 	write_in_file_heredoc(name, fd);
 	close(fd);
-	fd = open_name_file_for_read(data->commands->name_file_heredoc);
+	fd = open_name_file_for_read(node->name_file_heredoc);
 	if (fd == -1)
 		return (-1);
-	data->commands->fd_heredoc = fd;
+	node->fd_heredoc = fd;
 	return (fd);
 }
 
@@ -77,7 +76,7 @@ char *processing_a_redirect_heredoc(t_cmd *node, char *str, t_data *data, int *f
 	i -= 2;
 	a = i;
 	name = name_file(str, &i, a, data);
-	if (!name || ((fd = get_fd_file_heredoc(data, name)) < 0))
+	if (!name || ((fd = get_fd_file_heredoc(node, name)) < 0))
 		return (NULL);
 	if ((*flag) == 0)
 		push_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_TWO);
@@ -86,5 +85,6 @@ char *processing_a_redirect_heredoc(t_cmd *node, char *str, t_data *data, int *f
 	(*flag)++;
 	free(name);
 	after = ft_substr(str, i, ft_strlen(str) - i);
+	free(str);
 	return (after);
 }

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/19 16:13:04 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:17:47 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,27 @@ int yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag)
 	char *tmp;
 	s = ft_strdup(str);
 	tmp = redirect_processing(node, s, data, flag);
-	if(!ft_strlen(tmp))
+	// free(s);
+	if (!tmp)
+	{
+		// free(s);
+		return (-1);
+	}
+	else if(!ft_strlen(tmp))
 	{
 		free(tmp);
 		return(-1);
 	}
-	if (!tmp)
-	{
-		free(s);
-		return (-1);
-	}
-	// free(s);
-	s = change_dollar_in_str(tmp, data);
+
+
+
+	s = change_dollar_in_str(tmp, data); //почистила
 	node->command = get_command_from_str(s);
 	node->argument = get_argumens(s);
-
-	// free(s);
+	free(s);
 	node->tab_cmd = split_str_whitespace_for_execve(tmp, data);
-	free(tmp);
 	get_fd_in_and_out_for_redirect(node, data);
+	free(tmp);
 	return (0);
 }
 
@@ -143,7 +145,7 @@ int push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data) //фун
 	int flag;
 	flag = 0;
 
-	new = malloc(sizeof(t_cmd));
+	new = (t_cmd *)malloc(sizeof(t_cmd)); //не течет
 	if (!new)
 		return (-1);
 	new->next = *commands;
@@ -151,7 +153,7 @@ int push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data) //фун
 
 	init_cmd(new);
 
-	new->full_str = ft_strdup(list->str);
+	new->full_str = ft_strdup(list->str); //не течет
 	new->redirect_flag = get_redirect_flag(list->str);
 	if (!new->redirect_flag)
 		{
@@ -178,10 +180,9 @@ int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int
 	int flag;
 	flag = 0;
 
-	new = malloc(sizeof(t_cmd));
+	new = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new)
 	{
-		printf("Error malloc\n");
 		return (-1);
 	}
 	new->next = NULL;
@@ -200,10 +201,10 @@ int push_last_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data, int
 	{
 		if (yes_redirect_flag(new, list->str, data, &flag) < 0)
 		{
-			if (size_list_redirect(new->redirect))
-				free_redirect(&new->redirect);
-			free(new->full_str);
-			free(new);
+			// if (size_list_redirect(new->redirect))
+			// 	free_redirect(&new->redirect);
+			// free(new->full_str);
+			// free(new);
 			return (-1);
 		}
 	}

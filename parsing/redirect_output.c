@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 16:03:17 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:20:28 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void push_last_node_redirect(t_redirect **list, char *str, int fd, int a) //фу
 
 	t_redirect *new;
 	new = malloc(sizeof(t_redirect));
+	printf("redirect_out_24 = %p\n", new);
 	if (!new)
 	{
 		printf("Error malloc\n");
@@ -48,7 +49,6 @@ void push_node_redirect(t_redirect **list, char *str, int fd, int a) //функ�
 	new = malloc(sizeof(t_redirect));
 	if (!new)
 	{
-		printf("Error malloc\n");
 		return;
 	}
 	new->name = ft_strdup(str);
@@ -87,6 +87,7 @@ char *processing_a_redirect_out(t_cmd *node, char *str, t_data *data, int *flag,
 
 	if (!name || (fd = open_name_file_for_write(name)) < 0)
 	{
+		free(str);
 		global_status = 1;
 		return (NULL);
 	}
@@ -97,6 +98,7 @@ char *processing_a_redirect_out(t_cmd *node, char *str, t_data *data, int *flag,
 	(*flag)++;
 	free (name);
 	after = ft_substr(str, i, ft_strlen(str) - i);
+	free(str);
 	return (after);
 }
 
@@ -109,20 +111,24 @@ char *redirect_output(t_cmd *node, char *line, t_data *data, int *flag)
 	char *p;
 
 	p = NULL;
-
-	tmp = ft_strchr(line, '>');
+	tmp = ft_strdup(ft_strchr(line, '>'));
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(tmp));
+	// free(line);
 	if (ft_strnstr(tmp, ">>", 2))
 		after = processing_a_redirect_out(node, tmp, data, flag, REDIRECT_OUTPUT_TWO);
 	else
 		after = processing_a_redirect_out(node, tmp, data, flag, REDIRECT_OUTPUT_ONE);
+	// if(!ft_strlen(after))
+	// {
+	// 	free(after);
+	// 	return(p);
+	// }
 	if(!after)
 	{
 		free(before);
-		return(p);
+		return(NULL);
 	}
 	s = ft_strjoin(before, after);
-	free(line);
 	free(before);
 	free(after);
 	p = remove_extra_spaces_and_tabs_in_str(s);

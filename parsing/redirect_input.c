@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:58:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 16:03:13 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 20:19:18 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ char *name_file(char *str, int *i, int a, t_data *data)
 	char *name;
 
 	if (founding_name_file(str, i) < 0)
+	{
+		// free(str);
 		return (NULL);
+	}
 	name = get_name_file(str, i, a, data);
 	return (name);
 }
@@ -99,6 +102,7 @@ char *processing_a_redirect_in(t_cmd *node, char *str, t_data *data, int *flag, 
 	name = name_file(str, &i, a, data);
 	if (!name || (fd = open_name_file_for_read(name)) < 0)
 	{
+		free(str);
 		global_status = 1;
 		return (NULL);
 	}
@@ -109,6 +113,7 @@ char *processing_a_redirect_in(t_cmd *node, char *str, t_data *data, int *flag, 
 	(*flag)++;
 	free(name);
 	after = ft_substr(str, i, ft_strlen(str) - i);
+	free(str);
 	return (after);
 }
 
@@ -122,7 +127,7 @@ char *redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
 
 	p = NULL;
 
-	tmp = ft_strchr(line, '<');
+	tmp = ft_strdup(ft_strchr(line, '<'));
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(tmp));
 	if (ft_strnstr(tmp, "<<", 2))
 		after = processing_a_redirect_heredoc(node, tmp, data, flag, REDIRECT_INPUT_TWO);
@@ -136,7 +141,7 @@ char *redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
 		return (p);
 	}
 	s = ft_strjoin(before, after);
-	free(line);
+	// free(line);
 	free(before);
 	free(after);
 	p = remove_extra_spaces_and_tabs_in_str(s);

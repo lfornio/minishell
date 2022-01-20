@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 09:11:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 16:23:10 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/01/20 14:17:18 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int command_execution(t_data *data, int flag_for_fork, int **fd)
 		}
 	else if(!builtins_command(str))
 	{
-
+		//execve ?
 	}
 	else
 	{
