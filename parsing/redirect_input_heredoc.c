@@ -6,34 +6,33 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/20 20:19:10 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 11:12:05 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *get_next_line(char **line)
+char	*get_next_line(char **line)
 {
-	char *buf;
-	int i;
-	int res;
-	char ch;
+	char	*buf;
+	int		i;
+	char	ch;
 
+	i = 0;
 	buf = malloc(sizeof(char) * 1025);
 	if (!buf)
 		return (NULL);
-	i = 0;
 	ch = '\0';
 	*line = buf;
-	while ((res = read(0, &ch, 1)) > 0 && ch != '\n')
+	while (read(0, &ch, 1) > 0 && ch != '\n')
 		buf[i++] = ch;
 	buf[i] = '\0';
 	return (buf);
 }
 
-void write_in_file_heredoc(char *name, int fd)
+void	write_in_file_heredoc(char *name, int fd)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{
@@ -42,7 +41,7 @@ void write_in_file_heredoc(char *name, int fd)
 		if (!ft_strncmp(line, name, ft_strlen(line)))
 		{
 			free(line);
-			break;
+			break ;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -50,9 +49,10 @@ void write_in_file_heredoc(char *name, int fd)
 	}
 }
 
-int get_fd_file_heredoc(t_cmd *node, char *name)
+int	get_fd_file_heredoc(t_cmd *node, char *name)
 {
-	int fd;
+	int	fd;
+
 	node->name_file_heredoc = ft_strdup(".file");
 	fd = open_name_file_for_write(node->name_file_heredoc);
 	if (fd == -1)
@@ -66,25 +66,26 @@ int get_fd_file_heredoc(t_cmd *node, char *name)
 	return (fd);
 }
 
-char *processing_a_redirect_heredoc(t_cmd *node, char *str, t_data *data, int *flag, int i)
+char	*process_heredoc(t_params param, t_data *data, int *flag, int i)
 {
-	int a;
-	int fd;
-	char *name;
-	char *after;
+	int		a;
+	int		fd;
+	char	*name;
+	char	*after;
 
 	i -= 2;
 	a = i;
-	name = name_file(str, &i, a, data);
-	if (!name || ((fd = get_fd_file_heredoc(node, name)) < 0))
+	name = name_file(param.tmp, &i, a, data);
+	fd = get_fd_file_heredoc(param.node, name);
+	if (!name || fd < 0)
 		return (NULL);
 	if ((*flag) == 0)
-		push_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_TWO);
+		push_node_redirect(&param.node->redirect, name, fd, INPUT_TWO);
 	else
-		push_last_node_redirect(&node->redirect, name, fd, REDIRECT_INPUT_TWO);
+		push_last_node_redirect(&param.node->redirect, name, fd, INPUT_TWO);
 	(*flag)++;
 	free(name);
-	after = ft_substr(str, i, ft_strlen(str) - i);
-	free(str);
+	after = ft_substr(param.tmp, i, ft_strlen(param.tmp) - i);
+	free(param.tmp);
 	return (after);
 }

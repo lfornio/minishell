@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:20:06 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 19:26:55 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:50:32 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,6 @@ void	print_list_prepars(t_prepars *list)
 }
 
 /*
-функция берет указатель по индексу в списке
-*/
-t_prepars	*get_ptr_from_list(t_prepars *list, int index)
-{
-	t_prepars	*p;
-	int			i;
-
-	i = 1;
-	p = list;
-	while (i < index)
-	{
-		p = p->next;
-		i++;
-	}
-	return (p);
-}
-
-/*
 функция берет строку по индексу в списке
 */
 char	*get_str_from_list(t_prepars *list, int index)
@@ -103,4 +85,28 @@ int	size_list_prepars(t_prepars *list)
 		list = list->next;
 	}
 	return (count);
+}
+
+/*
+список препарса записывает в массив строк
+*/
+char	**prepars_list_remake_arr(t_prepars *list)
+{
+	char	**tab;
+	int		size_list;
+	int		i;
+
+	i = 0;
+	size_list = size_list_prepars(list);
+	tab = (char **)malloc(sizeof(char *) * (size_list + 1));
+	if (!tab)
+		return (NULL);
+	while (list)
+	{
+		tab[i] = ft_strdup(list->str);
+		i++;
+		list = list->next;
+	}
+	tab[i] = NULL;
+	return (tab);
 }

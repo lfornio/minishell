@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:06:52 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/20 20:17:20 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 19:43:12 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,19 @@ t_prepars	*create_list_prepars_for_execve(char *copy)
 */
 char	**split_str_whitespace_for_execve(char *str, t_data *data)
 {
-	char		*str_without_dollar;
+	char		*tmp;
 	t_prepars	*split_space;
 	char		**tab;
 
 	split_space = NULL;
 	tab = NULL;
-	str_without_dollar = change_dollar_in_str_for_execve(str, data);
-	if (!ft_strlen(str_without_dollar))
-	{
-		free(str_without_dollar);
+	tmp = change_dollar_in_str_for_execve(str, data);
+	if (!ft_strlen(tmp))
 		return (NULL);
-	}
-	split_space = create_list_prepars_for_execve(str_without_dollar);
+	split_space = create_list_prepars_for_execve(tmp);
 	remove_quote(&split_space);
 	error_last_pipe(split_space);
 	tab = prepars_list_remake_arr(split_space);
 	free_list_prepars(&split_space);
-	// free(str_without_dollar);
 	return (tab);
 }

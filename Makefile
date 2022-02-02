@@ -1,30 +1,32 @@
 NAME		= 	minishell
 SRCS		= 	minishell.c \
-				parsing/parsing.c \
 				parsing/preparsing.c \
 				parsing/quote.c \
 				parsing/quote_error.c \
-				parsing/prepars_list.c \
+				parsing/prepars_list_1.c \
 				parsing/prepars_list_2.c \
 				parsing/remove_extra_space.c \
 				parsing/remove_space.c \
-				parsing/gluing.c \
-				parsing/envp.c \
-				parsing/pipe_processing.c \
+				parsing/envp_1.c \
+				parsing/envp_2.c \
+				parsing/pipe_processing_1.c \
 				parsing/pipe_processing_2.c \
 				parsing/complete_data.c \
 				parsing/array_for_execve.c \
-				parsing/func_8.c \
-				parsing/func_9.c \
-				parsing/func_10.c \
-				parsing/func_11.c \
+				parsing/commands_list.c \
+				parsing/dollar_1.c \
+				parsing/dollar_2.c \
+				parsing/dollar_3.c \
+				parsing/redirect_flag.c \
+				parsing/redirect_list.c \
 				parsing/redirect_output.c \
+				parsing/redirect_name_file.c \
 				parsing/redirect_input.c \
 				parsing/redirect_input_heredoc.c \
 				parsing/redirect_get_fd_in_and_out.c \
-				print_data.c \
 				parsing/redirect_processing.c \
 				parsing/free_all_struct_data.c \
+				print_data.c \
 				execution/execution.c \
 				execution/processing.c \
 				execution/command_execution.c \
@@ -41,22 +43,25 @@ LIBFT_A		=   libft/libft.a
 OBJS		=	$(SRCS:.c=.o)
 
 .c.o: $(INCLUDE)
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 ${NAME}: $(OBJS) $(INCLUDE)
-	$(MAKE) -C ./libft
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE)  $(LIB_READLINE) -o $(NAME)
+	@$(MAKE) -C ./libft
+	@$(CC) $(FLAGS) $(OBJS) $(LIBFT_A) -lreadline $(INC_READLINE)  $(LIB_READLINE) -o $(NAME)
+	@echo "\033[32mGOOD COMPILATION\033[0m"
+
 
 all : libft $(NAME)
 
 clean :
-	make -C libft clean
-	rm -f $(OBJS)
+	@make -C libft clean
+	@rm -f $(OBJS)
+	@echo "\033[33mCLEAN\033[0m"
 
 
 fclean : clean
-	rm -f libft/libft.a
-	rm -f $(NAME)
+	@rm -f libft/libft.a
+	@rm -f $(NAME)
 
 re : fclean all
 

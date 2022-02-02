@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lfornio <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/04 07:47:43 by lfornio           #+#    #+#              #
-#    Updated: 2021/05/11 22:53:29 by lfornio          ###   ########.fr        #
+#    Updated: 2022/02/02 20:19:29 by lfornio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,18 +26,18 @@ RM		=	rm -f
 OBGS	=	 ${SRCS:.c=.o}
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}:	${OBGS} 
-	${AR} ${NAME} ${OBGS} ${HEAD}
-	
+${NAME}:	${OBGS}
+	@${AR} ${NAME} ${OBGS} ${HEAD}
+
 all: 	${NAME}
 
 clean:
-	${RM} ${OBGS}
+	@${RM} ${OBGS}
 
 fclean: clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
 
 re:  	fclean all
 

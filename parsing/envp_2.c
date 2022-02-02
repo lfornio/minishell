@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp.c                                             :+:      :+:    :+:   */
+/*   envp_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 19:41:16 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/20 20:17:32 by lfornio          ###   ########.fr       */
+/*   Created: 2021/12/25 12:08:56 by lfornio           #+#    #+#             */
+/*   Updated: 2022/02/02 17:18:18 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /*
-считываем окружение и сохраняем в список
+функция считает размер списка envp
 */
-t_list	*get_envp_list(char **envp)
+int	size_list_envp(t_list *list)
 {
-	t_list	*envp_list;
-	int		i;
+	int	count;
 
-	i = 0;
-	envp_list = NULL;
-	push_node(&envp_list, envp[i]);
-	i++;
-	while (envp[i])
+	count = 0;
+	if (!list)
+		return (-1);
+	while (list)
 	{
-		push_last_node(&envp_list, envp[i]);
-		i++;
+		count++;
+		list = list->next;
 	}
-	return (envp_list);
+	return (count);
 }
 
 /*
@@ -57,39 +55,6 @@ char	**envp_list_remake_arr(t_list *list)
 	}
 	tab[i] = NULL;
 	return (tab);
-}
-
-/*
-функция парсит строку из envp на массив строк:
-tab[0] - ключ(до =), tab[1] - значение(после =)
-и записывает в узел
-*/
-void	pars_envp_str(t_list *list, char *str)
-{
-	char	**tab;
-
-	tab = ft_split(str, '=');
-	list->key = tab[0];
-	list->value = tab[1];
-	free(tab);
-}
-
-/*
-функция считает размер списка envp
-*/
-int	size_list_envp(t_list *list)
-{
-	int	count;
-
-	count = 0;
-	if (!list)
-		return (-1);
-	while (list)
-	{
-		count++;
-		list = list->next;
-	}
-	return (count);
 }
 
 /*

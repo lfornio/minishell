@@ -6,30 +6,11 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:08:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 19:56:43 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:48:39 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*
-считаем сколько пайпов
-*/
-int	count_pipes(t_prepars *list)
-{
-	t_prepars	*p;
-	int			count;
-
-	p = list;
-	count = 0;
-	while (p)
-	{
-		if (p->str[0] == '|')
-			count++;
-		p = p->next;
-	}
-	return (count);
-}
 
 /*
 удаляем узлы с пайпами
@@ -48,6 +29,24 @@ void	delete_node_with_pipe(t_prepars *list)
 		}
 		p = p->next;
 	}
+}
+
+/*
+функция берет указатель по индексу в списке
+*/
+t_prepars	*get_ptr_from_list(t_prepars *list, int index)
+{
+	t_prepars	*p;
+	int			i;
+
+	i = 1;
+	p = list;
+	while (i < index)
+	{
+		p = p->next;
+		i++;
+	}
+	return (p);
 }
 
 /*

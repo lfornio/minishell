@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/20 16:04:30 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 16:39:11 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,34 @@ void	argv_is_not(char **argv)
 	char	*s;
 
 	s = argv[0];
+}
+
+void	init_data(t_data *data)
+{
+	data->count_commands = 0;
+	data->count_pipe = 0;
+	data->commands = NULL;
+	data->envp_list = NULL;
+	data->arr_envp = NULL;
+	data->prepars = NULL;
+}
+
+int	parsing(t_data *data, char *line, char **envp)
+{
+	init_data(data);
+	if (preparsing(data, line) < 0)
+	{
+		free_all(data);
+		free(line);
+		return (-1);
+	}
+	if (complete_data(data, envp) < 0)
+	{
+		free_all(data);
+		free(line);
+		return (-1);
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -36,15 +64,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("\001\033[32m\002minishell> \001\033[0m\002");
 		add_history(line);
-		// line = ft_strdup("ls >");
 		if (parsing(&data, line, envp) < 0)
 			continue ;
 		print_data(&data); //убрать потом, печатает основную структуру
 		if (execution(&data, line) < 0)
 			continue ;
-		// close(3);
-		// break;
-		// pause();
 	}
 	return (0);
 }

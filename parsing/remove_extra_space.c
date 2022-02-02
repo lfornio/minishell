@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:09:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/20 20:19:35 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/02 19:42:07 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ int	count_spaces_and_tabs(char *str, int *i)
 	return (count);
 }
 
-/*
-пропустили в строке пробелы и табуляции
-*/
-void	skipping_space(char *str, int *i)
-{
-	(*i)++;
-	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
-		(*i)++;
-}
-
 char	*copy_str_without_extra_spaces(char *str, int count)
 {
 	char	*tmp;
@@ -49,23 +39,14 @@ char	*copy_str_without_extra_spaces(char *str, int count)
 	int		i;
 	int		j;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	len = ft_strlen(str);
 	tmp = (char *)malloc(sizeof(char) * (len - count + 1));
 	if (!tmp)
 		return (NULL);
-	while (str[++i])
-	{
-		if (str[i] == ' ' || str[i] == '\t')
-		{
-			tmp[j++] = ' ';
-			skipping_space(str, &i);
-		}
-		tmp[j++] = str[i];
-	}
-	tmp[j] = '\0';
-	free (str);
+	remove_space(tmp, str);
+	free(str);
 	return (tmp);
 }
 
@@ -82,7 +63,11 @@ char	*remove_extra_spaces_and_tabs_in_str(char *str)
 	count = 0;
 	while (str[++i])
 	{
-		if (str[i] == ' ' || str[i] == '\t')
+		if (str[i] == '\'')
+			skip_the_quotes(str, &i, '\'');
+		else if (str[i] == '\"')
+			skip_the_quotes(str, &i, '\"');
+		else if (str[i] == ' ' || str[i] == '\t')
 			count += count_spaces_and_tabs(str, &i);
 	}
 	tmp = copy_str_without_extra_spaces(str, count);
@@ -90,17 +75,23 @@ char	*remove_extra_spaces_and_tabs_in_str(char *str)
 }
 
 /*
-перезаписали список без пробелов и табуляций
+удаляем пробелы в начала и конце строки
 */
-void	removing_spaces_and_tabs_in_list(t_prepars *list)
+char	*delete_space(char *str)
 {
-	t_prepars	*p;
+	char	*s;
+	int		len;
 
-	p = list;
-	while (p)
-	{
-		if (p->str[0] != '\'' && p->str[0] != '\"')
-			p->str = remove_extra_spaces_and_tabs_in_str(p->str);
-		p = p->next;
-	}
+	s = NULL;
+	len = ft_strlen(str);
+	if (str[0] == ' ')
+		s = ft_substr(str, 1, len - 1);
+	else if (str[0] == ' ' && str[len - 1] == ' ')
+		s = ft_substr(str, 1, len - 2);
+	else if (str[len - 1] == ' ')
+		s = ft_substr(str, 0, len - 1);
+	else
+		return (str);
+	free(str);
+	return (s);
 }
