@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 17:04:11 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/18 07:35:19 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 15:19:16 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void print_data(t_data *data)
 
 	printf("count_commands = %d\n", data->count_commands);
 	printf("count_pipe = %d\n", data->count_pipe);
-	printf("t_list_envp = %p\n", data->envp_list);
-	printf("t_arr_envp = %p\n", data->arr_envp);
 	printf("prepars = %p\n", data->prepars);
 	printf("t_cmd = %p\n", data->commands);
 	if (data->commands)

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:40:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 17:18:00 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:53:49 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ void	init_cmd(t_cmd *list)
 	list->full_str = NULL;
 }
 
-int	complete_node_cmd(t_cmd *node, t_prepars *list, t_data *data, int *flag)
+int	complete_node_cmd(t_cmd *node, t_prepars *list, int *flag, t_envp *env)
 {
 	node->full_str = ft_strdup(list->str);
 	node->redirect_flag = get_redirect_flag(list->str);
 	if (!node->redirect_flag)
 	{
-		if (no_redirect_flag(node, list->str, data) < 0)
+		if (no_redirect_flag(node, list->str, env) < 0)
 			return (-1);
 	}
 	else
 	{
-		if (yes_redirect_flag(node, list->str, data, flag) < 0)
+		if (yes_redirect_flag(node, list->str, flag, env) < 0)
 			return (-1);
 	}
 	return (0);
 }
 
-int	push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data)
+int	push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_envp *env)
 {
 	t_cmd	*new;
 	int		flag;
@@ -58,12 +58,12 @@ int	push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data)
 	new->next = *commands;
 	*commands = new;
 	init_cmd(new);
-	if (complete_node_cmd(new, list, data, &flag) < 0)
+	if (complete_node_cmd(new, list, &flag, env) < 0)
 		return (-1);
 	return (0);
 }
 
-int	push_last_node_cmd(t_cmd **commands, t_prepars *list, t_data *data, int num)
+int	push_last_node_cmd(t_cmd **commands, t_prepars *list, int num, t_envp *env)
 {
 	t_cmd	*tmp;
 	t_cmd	*new;
@@ -80,7 +80,7 @@ int	push_last_node_cmd(t_cmd **commands, t_prepars *list, t_data *data, int num)
 	tmp->next = new;
 	init_cmd(new);
 	new->num_cmd = num;
-	if (complete_node_cmd(new, list, data, &flag) < 0)
+	if (complete_node_cmd(new, list, &flag, env) < 0)
 		return (-1);
 	return (0);
 }

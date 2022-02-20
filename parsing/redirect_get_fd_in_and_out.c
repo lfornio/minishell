@@ -95,14 +95,12 @@ void	take_fd_in_or_out_from_list(t_cmd *node, t_redirect *list)
 	}
 }
 
-void	get_fd_in_and_out_for_redirect(t_cmd *node, t_data *data)
+void	get_fd_in_and_out_for_redirect(t_cmd *node)
 {
 	t_redirect	*ptr;
-	int			a;
 	int			size_list;
 
 	size_list = 0;
-	a = data->count_pipe;
 	ptr = node->redirect;
 	size_list = size_list_redirect(ptr);
 	take_fd_from_last_node_list(node, ptr, size_list);

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 17:21:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 17:12:21 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:25:31 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	skip_name_file(char *str, int *i)
 	}
 }
 
-char	*get_name_file(char *str, int *i, int a, t_data *data)
+char	*get_name_file(char *str, int *i, int a, t_envp *env)
 {
 	char	*name_file;
 	char	*tmp;
@@ -34,7 +34,7 @@ char	*get_name_file(char *str, int *i, int a, t_data *data)
 		tmp = ft_substr(str, a + 1, *i - a - 1);
 	else
 		tmp = ft_substr(str, a, *i - a);
-	name_file = change_dollar_in_str(tmp, data);
+	name_file = change_dollar_in_str(tmp, env);
 	if (!ft_strlen(name_file))
 	{
 		write(2, "minishell: ", 11);
@@ -61,12 +61,12 @@ int	founding_name_file(char *str, int *i)
 	return (0);
 }
 
-char	*name_file(char *str, int *i, int a, t_data *data)
+char	*name_file(char *str, int *i, int a, t_envp *env)
 {
 	char	*name;
 
 	if (founding_name_file(str, i) < 0)
 		return (NULL);
-	name = get_name_file(str, i, a, data);
+	name = get_name_file(str, i, a, env);
 	return (name);
 }

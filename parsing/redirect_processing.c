@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 20:31:07 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:47:51 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	error_redirect(char *line)
 	return (0);
 }
 
-char	*redirect_processing(t_cmd *node, char *line, t_data *data, int *flag)
+char	*redirect_processing(t_cmd *node, char *line, int *flag, t_envp *env)
 {
 	char	*tmp;
 	int		i;
@@ -38,9 +38,9 @@ char	*redirect_processing(t_cmd *node, char *line, t_data *data, int *flag)
 	while (line[i] && line[i] != '>' && line[i] != '<')
 		i++;
 	if (line[i] == '>')
-		tmp = redirect_output(node, line, data, flag);
+		tmp = redirect_output(node, line, env, flag);
 	else if (line[i] == '<')
-		tmp = redirect_input(node, line, data, flag);
+		tmp = redirect_input(node, line, env, flag);
 	if (!tmp)
 	{
 		if (line)
@@ -50,7 +50,7 @@ char	*redirect_processing(t_cmd *node, char *line, t_data *data, int *flag)
 	}
 	free(line);
 	while (tmp && get_redirect_flag(tmp))
-		tmp = redirect_processing(node, tmp, data, flag);
+		tmp = redirect_processing(node, tmp, flag, env);
 	return (tmp);
 }
 

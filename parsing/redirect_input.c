@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:58:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 14:59:32 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:28:50 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	processing_fd_input(char *name, int *fd, t_params *param)
 	return (0);
 }
 
-char	*process_redirect_in(t_params param, t_data *data, int *flag,
+char	*process_redirect_in(t_params param, t_envp *env, int *flag,
 	int i)
 {
 	int		a;
@@ -49,7 +49,7 @@ char	*process_redirect_in(t_params param, t_data *data, int *flag,
 
 	i -= 2;
 	a = i;
-	name = name_file(param.tmp, &i, a, data);
+	name = name_file(param.tmp, &i, a, env);
 	if (!name)
 	{
 		free(param.tmp);
@@ -69,7 +69,7 @@ char	*process_redirect_in(t_params param, t_data *data, int *flag,
 	return (after);
 }
 
-char	*redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
+char	*redirect_input(t_cmd *node, char *line, t_envp *env, int *flag)
 {
 	char		*before;
 	char		*after;
@@ -82,9 +82,9 @@ char	*redirect_input(t_cmd *node, char *line, t_data *data, int *flag)
 	param.tmp = ft_strdup(ft_strchr(line, '<'));
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(param.tmp));
 	if (ft_strnstr(param.tmp, "<<", 2))
-		after = process_heredoc(param, data, flag, INPUT_TWO);
+		after = process_heredoc(param, env, flag, INPUT_TWO);
 	else
-		after = process_redirect_in(param, data, flag, INPUT_ONE);
+		after = process_redirect_in(param, env, flag, INPUT_ONE);
 	if (!after)
 	{
 		free(before);

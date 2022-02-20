@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:45:43 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/01 15:11:22 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:05:50 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_change_str_without_dollar(t_dollar *dollar, char c, int *i)
 /*
 идем по строке и убираем кавычки и подставляем $
 */
-char	*change_dollar_in_str(char *str, t_data *data)
+char	*change_dollar_in_str(char *str, t_envp *env)
 {
 	int		i;
 	char	*copy;
@@ -73,15 +73,15 @@ char	*change_dollar_in_str(char *str, t_data *data)
 		if (copy[i] == '\'')
 			copy = removing_the_quotes(copy, &i, '\'');
 		else if (copy[i] == '$')
-			copy = after_dollar_char(copy, &i, data);
+			copy = after_dollar_char(copy, &i, env);
 		else if (copy[i] == '\"')
-			copy = removing_the_double_quotes(copy, &i, data);
+			copy = removing_the_double_quotes(copy, &i, env);
 		i++;
 	}
 	return (copy);
 }
 
-char	*after_dollar_char(char *str, int *i, t_data *data)
+char	*after_dollar_char(char *str, int *i, t_envp *env)
 {
 	char	*copy;
 
@@ -94,14 +94,14 @@ char	*after_dollar_char(char *str, int *i, t_data *data)
 	}
 	else if (copy[*i] == '?')
 	{
-		copy = processing_the_dollar(copy, i, data);
+		copy = processing_the_dollar(copy, i, env);
 	}
 	else if (ft_isdigit(copy[*i]))
 		copy = removing_the_dollar_before_quotes(copy, i);
 	else if (copy[*i] && !ft_isalnum(copy[*i]) && copy[*i] != '_')
 		copy = removing_the_dollar_before_quotes(copy, i);
 	else
-		copy = processing_the_dollar(copy, i, data);
+		copy = processing_the_dollar(copy, i, env);
 	free(str);
 	return (copy);
 }

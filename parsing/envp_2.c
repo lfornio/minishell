@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:08:56 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 17:18:18 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 17:01:40 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,30 @@ void	print_envp_list(t_list **list)
 		printf("%s=%s\n", p->key, p->value);
 		p = p->next;
 	}
+}
+
+void	free_arr_envp(t_envp *p)
+{
+	int	i;
+
+	i = 0;
+	while (p->arr_envp[i])
+	{
+		free(p->arr_envp[i]);
+		i++;
+	}
+}
+
+void	free_env_struct(t_envp *env)
+{
+	if (env->arr_envp)
+	{
+		free_arr_envp(env);
+		free(env->arr_envp);
+		env->arr_envp = NULL;
+	}
+	if (env->envp_list)
+		free_list(&env->envp_list);
+	if (env->envp_list_sort)
+		free_list(&env->envp_list_sort);
 }

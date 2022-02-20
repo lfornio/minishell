@@ -6,13 +6,13 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:06:52 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 19:43:12 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:22:18 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*change_dollar_in_str_for_execve(char *str, t_data *data)
+char	*change_dollar_in_str_for_execve(char *str, t_envp *env)
 {
 	int		i;
 	char	*copy;
@@ -29,7 +29,7 @@ char	*change_dollar_in_str_for_execve(char *str, t_data *data)
 			if (!copy[i])
 				break ;
 			else
-				copy = processing_the_dollar(copy, &i, data);
+				copy = processing_the_dollar(copy, &i, env);
 		}
 		i++;
 	}
@@ -106,7 +106,7 @@ t_prepars	*create_list_prepars_for_execve(char *copy)
 /*
 делит строку пробелом не в кавычках на массив строк
 */
-char	**split_str_whitespace_for_execve(char *str, t_data *data)
+char	**split_str_whitespace_for_execve(char *str, t_envp *env)
 {
 	char		*tmp;
 	t_prepars	*split_space;
@@ -114,7 +114,7 @@ char	**split_str_whitespace_for_execve(char *str, t_data *data)
 
 	split_space = NULL;
 	tab = NULL;
-	tmp = change_dollar_in_str_for_execve(str, data);
+	tmp = change_dollar_in_str_for_execve(str, env);
 	if (!ft_strlen(tmp))
 		return (NULL);
 	split_space = create_list_prepars_for_execve(tmp);

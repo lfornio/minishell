@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 11:12:05 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:28:03 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	get_fd_file_heredoc(t_cmd *node, char *name)
 	return (fd);
 }
 
-char	*process_heredoc(t_params param, t_data *data, int *flag, int i)
+char	*process_heredoc(t_params param, t_envp *env, int *flag, int i)
 {
 	int		a;
 	int		fd;
@@ -75,7 +75,7 @@ char	*process_heredoc(t_params param, t_data *data, int *flag, int i)
 
 	i -= 2;
 	a = i;
-	name = name_file(param.tmp, &i, a, data);
+	name = name_file(param.tmp, &i, a, env);
 	fd = get_fd_file_heredoc(param.node, name);
 	if (!name || fd < 0)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 15:01:44 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:42:23 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	processing_fd_output(char *name, int *fd, t_params *param)
 	return (0);
 }
 
-char	*processing_a_redirect_out(t_params param, t_data *data,
+char	*processing_a_redirect_out(t_params param, t_envp *env,
 	int *flag, int i)
 {
 	int		a;
@@ -48,7 +48,7 @@ char	*processing_a_redirect_out(t_params param, t_data *data,
 	char	*after;
 
 	a = i;
-	name = name_file(param.tmp, &i, a, data);
+	name = name_file(param.tmp, &i, a, env);
 	if (!name)
 	{
 		free(param.tmp);
@@ -68,7 +68,7 @@ char	*processing_a_redirect_out(t_params param, t_data *data,
 	return (after);
 }
 
-char	*redirect_output(t_cmd *node, char *line, t_data *data, int *flag)
+char	*redirect_output(t_cmd *node, char *line, t_envp *env, int *flag)
 {
 	t_params	param;
 	char		*before;
@@ -80,9 +80,9 @@ char	*redirect_output(t_cmd *node, char *line, t_data *data, int *flag)
 	param.tmp = ft_strdup(ft_strchr(line, '>'));
 	before = ft_substr(line, 0, ft_strlen(line) - ft_strlen(param.tmp));
 	if (ft_strnstr(param.tmp, ">>", 2))
-		after = processing_a_redirect_out(param, data, flag, OUTPUT_TWO);
+		after = processing_a_redirect_out(param, env, flag, OUTPUT_TWO);
 	else
-		after = processing_a_redirect_out(param, data, flag, OUTPUT_ONE);
+		after = processing_a_redirect_out(param, env, flag, OUTPUT_ONE);
 	if (!after)
 	{
 		free(before);

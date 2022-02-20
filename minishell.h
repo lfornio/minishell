@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 20:27:03 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 17:08:23 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,17 @@ typedef struct s_data
 	int count_commands;  //количество команд
 	int count_pipe; //количество пайпов
 	t_cmd *commands; // список команд
-	t_list *envp_list; // список env
-	char **arr_envp; // массив строк env
+	// t_list *envp_list; // список env
+	// char **arr_envp; // массив строк env
 	t_prepars *prepars; // след.узел
 } t_data;
+
+typedef struct s_envp
+{
+	t_list *envp_list; // список env
+	t_list *envp_list_sort; // список env сортированный
+	char **arr_envp; // массив строк env
+} t_envp;
 
 typedef struct s_params
 {
@@ -93,18 +100,18 @@ typedef struct s_dollar
 }t_dollar;
 
 /*-----------------PARSING--------------------*/
-char		**split_str_whitespace_for_execve(char *str, t_data *data);
-int			push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_data *data);
-int			push_last_node_cmd(t_cmd **commands, t_prepars *list, t_data *data, int num);
-int			complete_data(t_data *data, char **envp);
+char		**split_str_whitespace_for_execve(char *str, t_envp *env);
+int			push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_envp * env);
+int			push_last_node_cmd(t_cmd **commands, t_prepars *list, int num, t_envp *env);
+int			complete_data(t_data *data, t_envp *env);
 void		free_struct_data(t_data *list);
-char		*processing_the_dollar(char *str, int *i, t_data *data);
+char		*processing_the_dollar(char *str, int *i, t_envp *env);
 char		*removing_the_dollar_before_quotes(char *str, int *i);
 char		*removing_the_quotes(char *str, int *i, char c);
-char		*removing_the_double_quotes(char *str, int *i, t_data *data);
+char		*removing_the_double_quotes(char *str, int *i, t_envp *env);
 char		*get_change_str_without_dollar(t_dollar *dollar, char c, int *i);
-char		*change_dollar_in_str(char *str, t_data *data);
-char		*after_dollar_char(char *str, int *i, t_data *data);
+char		*change_dollar_in_str(char *str, t_envp *env);
+char		*after_dollar_char(char *str, int *i, t_envp *env);
 t_list		*get_envp_list(char **envp);
 char		**envp_list_remake_arr(t_list *list);
 void		print_envp_list(t_list **list);
@@ -130,27 +137,29 @@ void		skip_the_quotes(char *str, int *i, char c);
 char		*processing_quote(char *str, int *i);
 void		remove_quote(t_prepars **list);
 int			get_redirect_flag(char *str);
-int			no_redirect_flag(t_cmd *node, char *str, t_data *data);
-int			yes_redirect_flag(t_cmd *node, char *str, t_data *data, int *flag);
-void		get_fd_in_and_out_for_redirect(t_cmd *node, t_data *data);
-char		*process_heredoc(t_params param, t_data *data, int *flag, int i);
+int			no_redirect_flag(t_cmd *node, char *str, t_envp *env);
+int			yes_redirect_flag(t_cmd *node, char *str, int *flag, t_envp *env);
+void		get_fd_in_and_out_for_redirect(t_cmd *node);
+char		*process_heredoc(t_params param, t_envp *env, int *flag, int i);
 int			open_name_file_for_read(char *name);
-char		*redirect_input(t_cmd *node, char *line, t_data *data, int *flag);
+char		*redirect_input(t_cmd *node, char *line, t_envp *env, int *flag);
 int			size_list_redirect(t_redirect *list);
 void		free_redirect(t_redirect **list);
 void		push_node_redirect(t_redirect **list, char *str, int fd, int a);
 void		push_last_node_redirect(t_redirect **list, char *str, int fd, int a);
 void		free_list_redirect(t_redirect **list);
-char		*name_file(char *str, int *i, int a, t_data *data);
+char		*name_file(char *str, int *i, int a, t_envp *env);
 int			open_name_file_for_write(char *name);
-char		*redirect_output(t_cmd *node, char *line, t_data *data, int *flag);
-char		*redirect_processing(t_cmd *node, char *str, t_data *data, int *flag);
+char		*redirect_output(t_cmd *node, char *line, t_envp *env, int *flag);
+char		*redirect_processing(t_cmd *node, char *str, int *flag, t_envp *env);
 int			print_error_token(char *s);
 void		close_extra_fd(t_cmd *node, t_redirect *list);
 char		*remove_extra_spaces_and_tabs_in_str(char *str);
 char		*delete_space(char *str);
 int			removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list);
 void		remove_space(char *tmp, char *str);
+void		init_env(t_envp *env_struct, char **envp);
+void		free_env_struct(t_envp *env);
 
 /*-----------------EXECUTION--------------------*/
 int execution(t_data *data, char *line); //начинаются функции реализации команд
@@ -159,5 +168,6 @@ int processing(t_data *data);
 int builtins_command_execut(t_data *data, t_cmd *list);
 int builtins_command(char *str);
 void print_data(t_data *data);
+
 
 #endif

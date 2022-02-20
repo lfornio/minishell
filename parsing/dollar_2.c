@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 10:27:41 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/01 15:40:45 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/20 16:16:41 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*removing_the_quotes(char *str, int *i, char c)
 }
 
 char	*removing_the_double_quotes_with_dollar(char *copy, int *i, int *a,
-	t_data *data)
+	t_envp *env)
 {
 	(*i)++;
 	while (copy[*i])
@@ -97,7 +97,7 @@ char	*removing_the_double_quotes_with_dollar(char *copy, int *i, int *a,
 				(*i)--;
 				return (copy);
 			}
-			copy = after_dollar_char(copy, i, data);
+			copy = after_dollar_char(copy, i, env);
 		}
 		else if (copy[*i] == '\"')
 			break ;
@@ -108,14 +108,14 @@ char	*removing_the_double_quotes_with_dollar(char *copy, int *i, int *a,
 	return (copy);
 }
 
-char	*removing_the_double_quotes(char *str, int *i, t_data *data)
+char	*removing_the_double_quotes(char *str, int *i, t_envp *env)
 {
 	int		a;
 	char	*copy;
 
 	a = *i;
 	copy = ft_strdup(str);
-	copy = removing_the_double_quotes_with_dollar(copy, i, &a, data);
+	copy = removing_the_double_quotes_with_dollar(copy, i, &a, env);
 	free(str);
 	return (copy);
 }
