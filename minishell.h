@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 17:08:23 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:47:05 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ int			removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list);
 void		remove_space(char *tmp, char *str);
 void		init_env(t_envp *env_struct, char **envp);
 void		free_env_struct(t_envp *env);
+t_prepars	*get_ptr_from_list(t_prepars *list, int index);
+int			error_last_node(t_prepars *list);
 
 /*-----------------EXECUTION--------------------*/
 int execution(t_data *data, char *line); //начинаются функции реализации команд

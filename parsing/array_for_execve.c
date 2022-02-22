@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:06:52 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:22:18 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:46:04 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	**split_str_whitespace_for_execve(char *str, t_envp *env)
 		return (NULL);
 	split_space = create_list_prepars_for_execve(tmp);
 	remove_quote(&split_space);
-	error_last_pipe(split_space);
+	error_last_node(split_space);
 	tab = prepars_list_remake_arr(split_space);
 	free_list_prepars(&split_space);
 	return (tab);

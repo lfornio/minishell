@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:09:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 19:42:07 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/22 15:48:16 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,25 @@ char	*delete_space(char *str)
 		return (str);
 	free(str);
 	return (s);
+}
+
+int	error_last_node(t_prepars *list)
+{
+	t_prepars	*p;
+	t_prepars	*tmp;
+	int			size;
+	char		*s;
+
+	p = list;
+	while (1)
+	{
+		size = size_list_prepars(p);
+		s = get_str_from_list(p, size);
+		tmp = get_ptr_from_list(p, size);
+		if (ft_strlen(s) == 0)
+			delete_last_node_prepars(tmp, list);
+		else
+			break ;
+	}
+	return (0);
 }
