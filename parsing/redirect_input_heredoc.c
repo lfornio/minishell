@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:43:42 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:28:03 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:34:14 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_fd_file_heredoc(t_cmd *node, char *name)
 	int	fd;
 
 	node->name_file_heredoc = ft_strdup(".file");
-	fd = open_name_file_for_write(node->name_file_heredoc);
+	fd = open_name_file_for_write(node->name_file_heredoc, OUTPUT_ONE);
 	if (fd == -1)
 		return (-1);
 	write_in_file_heredoc(name, fd);

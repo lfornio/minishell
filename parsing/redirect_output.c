@@ -6,17 +6,21 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:42:23 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:38:43 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	open_name_file_for_write(char *name)
+int	open_name_file_for_write(char *name, int flag)
 {
 	int	fd;
 
-	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = -1;
+	if (flag == OUTPUT_ONE)
+		fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (flag == OUTPUT_TWO)
+		fd = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		write(2, "minishell: ", 11);
@@ -27,9 +31,9 @@ int	open_name_file_for_write(char *name)
 	return (fd);
 }
 
-int	processing_fd_output(char *name, int *fd, t_params *param)
+int	processing_fd_output(char *name, int *fd, t_params *param, int flag)
 {
-	*fd = open_name_file_for_write(name);
+	*fd = open_name_file_for_write(name, flag);
 	if (*fd < 0)
 	{
 		free(param->tmp);
@@ -55,7 +59,7 @@ char	*processing_a_redirect_out(t_params param, t_envp *env,
 		global_status = 258;
 		return (NULL);
 	}
-	if (processing_fd_output(name, &fd, &param) < 0)
+	if (processing_fd_output(name, &fd, &param, a) < 0)
 		return (NULL);
 	if ((*flag) == 0)
 		push_node_redirect(&param.node->redirect, name, fd, a);

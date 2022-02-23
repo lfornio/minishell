@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/22 15:47:05 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:31:20 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void		push_node_redirect(t_redirect **list, char *str, int fd, int a);
 void		push_last_node_redirect(t_redirect **list, char *str, int fd, int a);
 void		free_list_redirect(t_redirect **list);
 char		*name_file(char *str, int *i, int a, t_envp *env);
-int			open_name_file_for_write(char *name);
+int			open_name_file_for_write(char *name, int flag);
 char		*redirect_output(t_cmd *node, char *line, t_envp *env, int *flag);
 char		*redirect_processing(t_cmd *node, char *str, int *flag, t_envp *env);
 int			print_error_token(char *s);
