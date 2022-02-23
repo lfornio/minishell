@@ -6,16 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:09:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/22 15:48:16 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:56:15 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-посчитали сколько надо убрать символов
-из страрой строки чтобы посчитать malloc для новой
-*/
 int	count_spaces_and_tabs(char *str, int *i)
 {
 	int	count;
@@ -50,9 +46,6 @@ char	*copy_str_without_extra_spaces(char *str, int count)
 	return (tmp);
 }
 
-/*
-убрали из строки лишние пробелы и табуляции
-*/
 char	*remove_extra_spaces_and_tabs_in_str(char *str)
 {
 	int		i;
@@ -74,9 +67,6 @@ char	*remove_extra_spaces_and_tabs_in_str(char *str)
 	return (tmp);
 }
 
-/*
-удаляем пробелы в начала и конце строки
-*/
 char	*delete_space(char *str)
 {
 	char	*s;

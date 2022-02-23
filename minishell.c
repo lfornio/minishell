@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:38:49 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 17:08:16 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:45:12 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	t_envp	env_struct;
 	char	*line;
 
-	global_status = 0;
+	g_status = 0;
 	line = NULL;
 	argv_is_not(argv);
 	init_env(&env_struct, envp);

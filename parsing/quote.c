@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:50:21 by lfornio           #+#    #+#             */
-/*   Updated: 2022/01/21 13:41:45 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:55:23 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-пропускаем кавычки
-*/
 void	skip_the_quotes(char *str, int *i, char c)
 {
 	(*i)++;
@@ -26,9 +23,6 @@ void	skip_the_quotes(char *str, int *i, char c)
 	}
 }
 
-/*
-функция обрабатывает  ' и " в строке
-*/
 char	*ft_quote(char *str, int *i, char c)
 {
 	int		a;
@@ -51,9 +45,6 @@ char	*ft_quote(char *str, int *i, char c)
 	return (tmp);
 }
 
-/*
-функция обрабатывает символы отличные от  ' "
-*/
 char	*ft_non(char *str, int *i)
 {
 	int		a;
@@ -72,9 +63,6 @@ char	*ft_non(char *str, int *i)
 	return (tmp);
 }
 
-/*
-функция находит кавычки
-*/
 char	*processing_quote(char *str, int *i)
 {
 	char	*tmp;

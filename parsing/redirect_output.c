@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:44:58 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 10:38:43 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:46:51 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	processing_fd_output(char *name, int *fd, t_params *param, int flag)
 	if (*fd < 0)
 	{
 		free(param->tmp);
-		global_status = 1;
+		g_status = 1;
 		return (-1);
 	}
 	return (0);
@@ -56,7 +56,7 @@ char	*processing_a_redirect_out(t_params param, t_envp *env,
 	if (!name)
 	{
 		free(param.tmp);
-		global_status = 258;
+		g_status = 258;
 		return (NULL);
 	}
 	if (processing_fd_output(name, &fd, &param, a) < 0)

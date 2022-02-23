@@ -6,17 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:41:16 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 17:00:08 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:53:33 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-функция парсит строку из envp на массив строк:
-tab[0] - ключ(до =), tab[1] - значение(после =)
-и записывает в узел
-*/
 void	pars_envp_str(t_list *list, char *str)
 {
 	char	**tab;
@@ -55,9 +50,6 @@ void	push_last_node_envp(t_list **list, char *str)
 	tmp->next = new;
 }
 
-/*
-считываем окружение и сохраняем в список
-*/
 t_list	*get_envp_list(char **envp)
 {
 	t_list	*envp_list;

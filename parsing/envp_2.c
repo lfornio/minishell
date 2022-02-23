@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:08:56 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 17:01:40 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:53:43 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-функция считает размер списка envp
-*/
 int	size_list_envp(t_list *list)
 {
 	int	count;
@@ -30,9 +27,6 @@ int	size_list_envp(t_list *list)
 	return (count);
 }
 
-/*
-список envp записывает в массив строк
-*/
 char	**envp_list_remake_arr(t_list *list)
 {
 	char	**tab;
@@ -57,9 +51,6 @@ char	**envp_list_remake_arr(t_list *list)
 	return (tab);
 }
 
-/*
-печатает список env
-*/
 void	print_envp_list(t_list **list)
 {
 	t_list	*p;

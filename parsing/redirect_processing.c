@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:47:51 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:47:30 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*redirect_processing(t_cmd *node, char *line, int *flag, t_envp *env)
 	{
 		if (line)
 			free(line);
-		global_status = 0;
+		g_status = 0;
 		return (NULL);
 	}
 	free(line);
@@ -59,7 +59,7 @@ int	print_error_token(char *s)
 	write(2, "minishell: syntax error near unexpected token `", 47);
 	write(2, s, ft_strlen(s));
 	write(2, "'\n", 2);
-	global_status = 258;
+	g_status = 258;
 	return (-1);
 }
 

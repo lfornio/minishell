@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:08:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 16:48:39 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:54:11 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-удаляем узлы с пайпами
-*/
 void	delete_node_with_pipe(t_prepars *list)
 {
 	t_prepars	*p;
@@ -31,9 +28,6 @@ void	delete_node_with_pipe(t_prepars *list)
 	}
 }
 
-/*
-функция берет указатель по индексу в списке
-*/
 t_prepars	*get_ptr_from_list(t_prepars *list, int index)
 {
 	t_prepars	*p;
@@ -49,9 +43,6 @@ t_prepars	*get_ptr_from_list(t_prepars *list, int index)
 	return (p);
 }
 
-/*
-если последний узел пустой - удаляет, если пайп - ошибка
-*/
 int	error_last_pipe(t_prepars *list)
 {
 	t_prepars	*p;

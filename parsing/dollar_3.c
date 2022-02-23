@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:45:43 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:05:50 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:46:32 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*change_dollar_question(char *before)
 	char	*tmp;
 	char	*res;
 
-	tmp = ft_itoa(global_status);
+	tmp = ft_itoa(g_status);
 	res = ft_strjoin(before, tmp);
 	free(tmp);
 	return (res);
@@ -58,9 +58,6 @@ char	*get_change_str_without_dollar(t_dollar *dollar, char c, int *i)
 	return (res);
 }
 
-/*
-идем по строке и убираем кавычки и подставляем $
-*/
 char	*change_dollar_in_str(char *str, t_envp *env)
 {
 	int		i;

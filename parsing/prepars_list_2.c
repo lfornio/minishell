@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:20:06 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 16:50:32 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:54:42 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-чистит список препарса
-*/
 void	free_list_prepars(t_prepars **list)
 {
 	t_prepars	*p;
@@ -32,9 +29,6 @@ void	free_list_prepars(t_prepars **list)
 	}
 }
 
-/*
-печатает список препарса
-*/
 void	print_list_prepars(t_prepars *list)
 {
 	t_prepars	*p;
@@ -47,9 +41,6 @@ void	print_list_prepars(t_prepars *list)
 	}
 }
 
-/*
-функция берет строку по индексу в списке
-*/
 char	*get_str_from_list(t_prepars *list, int index)
 {
 	t_prepars	*p;
@@ -69,9 +60,6 @@ char	*get_str_from_list(t_prepars *list, int index)
 	return (str);
 }
 
-/*
-функция считает размер списка препарса
-*/
 int	size_list_prepars(t_prepars *list)
 {
 	int	count;
@@ -87,9 +75,6 @@ int	size_list_prepars(t_prepars *list)
 	return (count);
 }
 
-/*
-список препарса записывает в массив строк
-*/
 char	**prepars_list_remake_arr(t_prepars *list)
 {
 	char	**tab;

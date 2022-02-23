@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 10:31:20 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:51:44 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,87 +22,86 @@
 # include <readline/history.h>
 # include "libft/libft.h"
 
-#define OUTPUT_ONE 1
-#define OUTPUT_TWO 2
-#define INPUT_ONE 3
-#define INPUT_TWO 4
+# define OUTPUT_ONE 1
+# define OUTPUT_TWO 2
+# define INPUT_ONE 3
+# define INPUT_TWO 4
 
-int global_status;
+int	g_status;
 
-typedef struct s_list  //односвязный список env
+typedef struct s_list
 {
-	char *key; //ключ до =
-	char *value; //значение после =
-	struct s_list *next;
-} t_list;
+	char			*key;
+	char			*value;
+	struct s_list	*next;
+}	t_list;
 
-typedef struct s_prepars  //вспомогательный односвязный список для препарсинга
+typedef struct s_prepars
 {
-	char *str;
-	struct s_prepars *next;
-} t_prepars;
+	char				*str;
+	struct s_prepars	*next;
+}	t_prepars;
 
-typedef struct s_redirect //вспомогательный односв.список для редиректов
+typedef struct s_redirect
 {
-	char *name;
-	int fd;
-	int id;
-	struct s_redirect *next;
-} t_redirect;
+	char				*name;
+	int					fd;
+	int					id;
+	struct s_redirect	*next;
+}	t_redirect;
 
-typedef struct s_cmd //односвязный список команд. Один узел содержит следующие поля:
+typedef struct s_cmd
 {
-	int num_cmd; //номер команды (1-ая команда == 0)
-	char *command; // команда
-	char *argument; // аргументы команды
-	char **tab_cmd; //массив строк (1-я строка команда, остальные аргументы)
-	int redirect_flag;  //флаг есть ли редиректы
-	t_redirect *redirect; // если есть редиректы, создаем вспомогательный список для редиректов с fd и именами файлов
-	char *name_file_heredoc; //если есть << создаем временный файл .file
-	int fd_heredoc; //флаг есть ли <<
-	int fd_in; //fd на чтение(откуда читаем)
-	int flag_fd_in; // 3 если < или 4 если <<
-	int fd_out; //fd на запись(куда записываем)
-	int flag_fd_out;// 1 если > или 2 если >>
-	char *full_str; // вспомогательная строка (полная) для парсинга
-	struct s_cmd *next; // следующий узел
-} t_cmd;
+	int				num_cmd;
+	char			*command;
+	char			*argument;
+	char			**tab_cmd;
+	int				redirect_flag;
+	t_redirect		*redirect;
+	char			*name_file_heredoc;
+	int				fd_heredoc;
+	int				fd_in;
+	int				flag_fd_in;
+	int				fd_out;
+	int				flag_fd_out;
+	char			*full_str;
+	struct s_cmd	*next;
+}	t_cmd;
 
 typedef struct s_data
 {
-	int count_commands;  //количество команд
-	int count_pipe; //количество пайпов
-	t_cmd *commands; // список команд
-	// t_list *envp_list; // список env
-	// char **arr_envp; // массив строк env
-	t_prepars *prepars; // след.узел
-} t_data;
+	int			count_commands;
+	int			count_pipe;
+	t_cmd		*commands;
+	t_prepars	*prepars;
+}	t_data;
 
 typedef struct s_envp
 {
-	t_list *envp_list; // список env
-	t_list *envp_list_sort; // список env сортированный
-	char **arr_envp; // массив строк env
-} t_envp;
+	t_list	*envp_list;
+	t_list	*envp_list_sort;
+	char	**arr_envp;
+}	t_envp;
 
 typedef struct s_params
 {
-	t_cmd *node;
-	char *tmp;
+	t_cmd	*node;
+	char	*tmp;
 }t_params;
 
 typedef struct s_dollar
 {
-	char *before;
-	char *after;
-	char *value;
-	char *tmp;
-}t_dollar;
+	char	*before;
+	char	*after;
+	char	*value;
+	char	*tmp;
+}	t_dollar;
 
 /*-----------------PARSING--------------------*/
 char		**split_str_whitespace_for_execve(char *str, t_envp *env);
-int			push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_envp * env);
-int			push_last_node_cmd(t_cmd **commands, t_prepars *list, int num, t_envp *env);
+int			push_node_cmd_firs(t_cmd **commands, t_prepars *list, t_envp *env);
+int			push_last_node_cmd(t_cmd **commands, t_prepars *list, int num,
+				t_envp *env);
 int			complete_data(t_data *data, t_envp *env);
 void		free_struct_data(t_data *list);
 char		*processing_the_dollar(char *str, int *i, t_envp *env);
@@ -146,12 +145,14 @@ char		*redirect_input(t_cmd *node, char *line, t_envp *env, int *flag);
 int			size_list_redirect(t_redirect *list);
 void		free_redirect(t_redirect **list);
 void		push_node_redirect(t_redirect **list, char *str, int fd, int a);
-void		push_last_node_redirect(t_redirect **list, char *str, int fd, int a);
+void		push_last_node_redirect(t_redirect **list, char *str, int fd,
+				int a);
 void		free_list_redirect(t_redirect **list);
 char		*name_file(char *str, int *i, int a, t_envp *env);
 int			open_name_file_for_write(char *name, int flag);
 char		*redirect_output(t_cmd *node, char *line, t_envp *env, int *flag);
-char		*redirect_processing(t_cmd *node, char *str, int *flag, t_envp *env);
+char		*redirect_processing(t_cmd *node, char *str, int *flag,
+				t_envp *env);
 int			print_error_token(char *s);
 void		close_extra_fd(t_cmd *node, t_redirect *list);
 char		*remove_extra_spaces_and_tabs_in_str(char *str);
@@ -164,12 +165,11 @@ t_prepars	*get_ptr_from_list(t_prepars *list, int index);
 int			error_last_node(t_prepars *list);
 
 /*-----------------EXECUTION--------------------*/
-int execution(t_data *data, char *line); //начинаются функции реализации команд
-int command_execution(t_data *data, int flag_for_fork, int **fd);
-int processing(t_data *data);
-int builtins_command_execut(t_data *data, t_cmd *list);
-int builtins_command(char *str);
-void print_data(t_data *data);
-
+int			execution(t_data *data, char *line);
+int			command_execution(t_data *data, int flag_for_fork, int **fd);
+int			processing(t_data *data);
+int			builtins_command_execut(t_data *data, t_cmd *list);
+int			builtins_command(char *str);
+void		print_data(t_data *data);
 
 #endif

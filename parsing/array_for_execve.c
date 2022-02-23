@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:06:52 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/22 15:46:04 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:52:49 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,6 @@ t_prepars	*create_list_prepars_for_execve(char *copy)
 	return (p);
 }
 
-/*
-делит строку пробелом не в кавычках на массив строк
-*/
 char	**split_str_whitespace_for_execve(char *str, t_envp *env)
 {
 	char		*tmp;

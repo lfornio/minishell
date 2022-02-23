@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 14:48:43 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 19:42:42 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 12:46:06 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-ищем узлы-строки без пайпов
-*/
 int	removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)
 {
 	t_prepars	*p;
@@ -27,7 +24,7 @@ int	removing_spaces_at_the_beginning_and_end_in_str(t_prepars *list)
 			p->str = delete_space(p->str);
 			if (!ft_strlen(p->str) && size_list_prepars(list) == 1)
 			{
-				global_status = 0;
+				g_status = 0;
 				return (-1);
 			}
 		}
@@ -62,9 +59,6 @@ void	copy_chars_in_double_quote(char *str, int *i, char *tmp, int *j)
 	}
 }
 
-/*
-пропустили в строке пробелы и табуляции
-*/
 void	skipping_space(char *str, int *i)
 {
 	(*i)++;

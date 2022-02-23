@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:36:18 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 17:46:47 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:54:25 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-функция создает 1ый узел для препарсинга
-*/
 void	push_node_prepars(t_prepars **list, char *str)
 {
 	t_prepars	*new;
@@ -29,9 +26,6 @@ void	push_node_prepars(t_prepars **list, char *str)
 	*list = new;
 }
 
-/*
-функция добавляет узел в конец списка для препарсинга
-*/
 void	push_last_node_prepars(t_prepars **list, char *str)
 {
 	t_prepars	*tmp;
@@ -50,9 +44,6 @@ void	push_last_node_prepars(t_prepars **list, char *str)
 	tmp->next = new;
 }
 
-/*
-удаляет последний узел в списке
-*/
 void	delete_last_node_prepars(t_prepars *p, t_prepars *head)
 {
 	t_prepars	*tmp;
@@ -65,9 +56,6 @@ void	delete_last_node_prepars(t_prepars *p, t_prepars *head)
 	free(p);
 }
 
-/*
-добавляем новый узел в середину
-*/
 t_prepars	*a_new_node_in_the_middle(t_prepars *middle, char *str)
 {
 	t_prepars	*new;
@@ -83,9 +71,6 @@ t_prepars	*a_new_node_in_the_middle(t_prepars *middle, char *str)
 	return (new);
 }
 
-/*
-удаляет узел в середине списка
-*/
 t_prepars	*delete_node_prepars(t_prepars *p, t_prepars *head)
 {
 	t_prepars	*tmp;

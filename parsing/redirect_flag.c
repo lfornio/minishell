@@ -6,7 +6,7 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:02:45 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:51:58 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:55:30 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ char	*get_argumens(char *str)
 	return (s);
 }
 
-/*
-берем флаг редиректа
-*/
 int	get_redirect_flag(char *str)
 {
 	int	i;

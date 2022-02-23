@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 11:10:40 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 11:07:04 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:54:01 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-ошибка пайпа
-*/
 int	error_pipe_found(char *str, int i, int count)
 {
 	if (count == 0 && (i == 0 || i == 1) && str[i] == '|')
@@ -47,9 +44,6 @@ t_prepars	*write_pipe_private_node(t_prepars *q, int *i, int a)
 	return (q);
 }
 
-/*
-если нашли | то перезаписываем список
-*/
 t_prepars	*remake_list_with_pipes(char *str, int count, t_prepars *p)
 {
 	t_prepars	*q;
@@ -76,9 +70,6 @@ t_prepars	*remake_list_with_pipes(char *str, int count, t_prepars *p)
 	return (q);
 }
 
-/*
-ищем с
-*/
 int	found_char_c(char *str, char c)
 {
 	int	i;
@@ -93,9 +84,6 @@ int	found_char_c(char *str, char c)
 	return (0);
 }
 
-/*
-ищет пайпы и презаписывает список в строках без ' "
-*/
 int	search_for_pipes(t_prepars *list)
 {
 	t_prepars	*p;

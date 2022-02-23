@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:30:25 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:54:41 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:53:06 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-считаем сколько пайпов
-*/
 int	count_pipes(t_prepars *list)
 {
 	t_prepars	*p;
@@ -31,13 +28,6 @@ int	count_pipes(t_prepars *list)
 	return (count);
 }
 
-/*
-посчитали сколько пайпов
-удалили пайпы
-количество команд
-envp сохранили в список
-список envp сохранили в массив строк
-*/
 int	create_cmd(t_data *data, t_envp *env)
 {
 	t_prepars	*ptr;

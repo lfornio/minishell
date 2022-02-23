@@ -6,15 +6,12 @@
 /*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:02:10 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/02 17:02:52 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/23 10:55:52 by lfornio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*
-функция считает размер списка redirect
-*/
 int	size_list_redirect(t_redirect *list)
 {
 	t_redirect	*p;
@@ -32,9 +29,6 @@ int	size_list_redirect(t_redirect *list)
 	return (count);
 }
 
-/*
-функция создает 1ый узел
-*/
 void	push_node_redirect(t_redirect **list, char *str, int fd, int a)
 {
 	t_redirect	*new;
@@ -49,9 +43,6 @@ void	push_node_redirect(t_redirect **list, char *str, int fd, int a)
 	*list = new;
 }
 
-/*
-функция добавляет узел в конец списка
-*/
 void	push_last_node_redirect(t_redirect **list, char *str, int fd, int a)
 {
 	t_redirect	*tmp;
