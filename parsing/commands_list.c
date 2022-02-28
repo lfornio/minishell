@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:40:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/20 16:53:49 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/26 12:43:49 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_cmd(t_cmd *list)
 	list->fd_heredoc = 0;
 	list->fd_in = 0;
 	list->flag_fd_in = 0;
-	list->fd_out = 0;
+	list->fd_out = 1;
 	list->flag_fd_out = 0;
 	list->full_str = NULL;
 }
@@ -83,4 +83,15 @@ int	push_last_node_cmd(t_cmd **commands, t_prepars *list, int num, t_envp *env)
 	if (complete_node_cmd(new, list, &flag, env) < 0)
 		return (-1);
 	return (0);
+}
+
+t_cmd	*delete_node_cmd_firs(t_cmd **commands)
+{
+	t_cmd	*p;
+
+	p = *commands;
+	*commands = p->next;
+	free_cmd_box(p);
+	free(p);
+	return (*commands);
 }

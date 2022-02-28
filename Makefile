@@ -26,11 +26,27 @@ SRCS		= 	minishell.c \
 				parsing/redirect_get_fd_in_and_out.c \
 				parsing/redirect_processing.c \
 				parsing/free_all_struct_data.c \
-				print_data.c \
 				execution/execution.c \
 				execution/processing.c \
-				execution/command_execution.c \
-				execution/builtins.c
+				execution/pipes.c \
+				execution/pipes2.c \
+				execution/signals.c \
+				execution/chenge_lvl.c \
+				builtins/builtins.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/pwd.c \
+				builtins/unset.c \
+				builtins/export.c \
+				builtins/export_utils.c \
+				builtins/export_utils2.c \
+				builtins/cd.c \
+				builtins/cd_utils.c \
+				builtins/cd_utils2.c \
+				builtins/exit.c \
+				utils/errors_funct.c \
+				utils/errors_funct2.c \
+				utils/utils_funct.c \
 
 
 

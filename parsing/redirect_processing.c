@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_processing.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 18:13:12 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 12:47:30 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/26 19:00:21 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*redirect_processing(t_cmd *node, char *line, int *flag, t_envp *env)
 	{
 		if (line)
 			free(line);
-		g_status = 0;
 		return (NULL);
 	}
 	free(line);

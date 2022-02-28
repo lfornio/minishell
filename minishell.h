@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 13:45:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 12:51:44 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/26 12:42:55 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,13 +163,62 @@ void		init_env(t_envp *env_struct, char **envp);
 void		free_env_struct(t_envp *env);
 t_prepars	*get_ptr_from_list(t_prepars *list, int index);
 int			error_last_node(t_prepars *list);
+void		print_list_commands(t_cmd *list);
+void		free_list_commands(t_cmd **list);
+t_cmd		*delete_node_cmd_firs(t_cmd **commands);
+void		free_cmd_box(t_cmd *p);
 
 /*-----------------EXECUTION--------------------*/
-int			execution(t_data *data, char *line);
-int			command_execution(t_data *data, int flag_for_fork, int **fd);
-int			processing(t_data *data);
-int			builtins_command_execut(t_data *data, t_cmd *list);
+int			execution(t_data *data, t_envp *envp_struct);
+void		without_pipes(t_data *data, t_envp *envp_struct);
+void		with_pipes(t_data *data, int **fd, t_envp *envp_struct);
+void		with_pipes_builtin(t_data *data, int i, int **fd, t_envp *envp_str);
+void		with_pipes_execve(t_data *data, int i, int **fd, t_envp *envp_str);
+void		define_path(t_cmd *commands, t_envp *envp_struct);
+char		*ft_strjoin_mod(char const *s1, char const *s2, char c);
+char		**for_path(t_list *env);
 int			builtins_command(char *str);
-void		print_data(t_data *data);
-
+int			builtins_command_execut(t_data *data, t_envp *envp_struct);
+void		ft_export(t_data *data, int out, t_envp *envp_struct);
+int			key_validation(char *cmd, char *arg);
+void		change_key_value(t_envp *envp_struct, char *args);
+char		**envp_list_arr(t_list *list);
+char		*find_key_arg(char *s, int c);
+void		ft_env(int out, char **arr_envp);
+void		ft_echo(char **tab_cmd, int out);
+void		ft_pwd(int out);
+char		*get_pwd(void);
+void		ft_unset(t_data *data, t_envp *envp_struct);
+void		ft_cd(char **tab_cmd, int out, t_envp *envp_struct);
+int			home_cd(t_envp *envp_struct);
+void		cd_oldpwd(int out, t_envp *envp_struct);
+void		part_my_cd(t_envp *envp_struct, char *cur_dir1);
+void		ft_exit(t_data *data, char **tab_cmd);
+void		signals(void);
+void		sig_in_fork(void);
+void		close_fds(t_cmd *lst);
+void		change_shell_lvl(t_envp *envp_struct);
+void		*for_free(char **new);
+void		no_file(char *filename);
+int			ft_keylen(char *arg);
+int			ft_isdigit_yes(int c);
+void		malloc_error(void *ptr);
+int			ft_write_error_arg(char *cmnd, char *arg);
+int			ft_strcmp(const char *s1, const char *s2);
+void		command_not_found(char *cmd);
+void		for_end(t_data *data, int **fd, int *arr);
+void		first_pipe(t_data *data, int size, int **fd);
+void		middle_pipe(t_data *data, int i, int size, int **fd);
+void		last_pipe(t_data *data, int size, int **fd);
+void		print_fork_error(void);
+void		free_arr_envp(t_envp *p);
+int			size_list_envp(t_list *list);
+void		malloc_error(void *ptr);
+void		ft_error(char *str);
+void		cd_home_error(void);
+void		input_eof(void);
+void		cntrl_c(int sig);
+void		cntrl_c2(int sig);
+void		close_fd(t_data *data);
+void		no_such_directory(char *cmd);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_for_execve.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:06:52 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 10:52:49 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/25 22:20:32 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ char	**split_str_whitespace_for_execve(char *str, t_envp *env)
 	tab = NULL;
 	tmp = change_dollar_in_str_for_execve(str, env);
 	if (!ft_strlen(tmp))
+	{
+		free(tmp);
 		return (NULL);
+	}
 	split_space = create_list_prepars_for_execve(tmp);
 	remove_quote(&split_space);
 	error_last_node(split_space);

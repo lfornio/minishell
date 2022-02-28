@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_extra_space.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:09:51 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 10:56:15 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/26 12:44:26 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,13 @@ char	*delete_space(char *str)
 int	error_last_node(t_prepars *list)
 {
 	t_prepars	*p;
-	t_prepars	*tmp;
-	int			size;
-	char		*s;
 
 	p = list;
-	while (1)
+	while (p)
 	{
-		size = size_list_prepars(p);
-		s = get_str_from_list(p, size);
-		tmp = get_ptr_from_list(p, size);
-		if (ft_strlen(s) == 0)
-			delete_last_node_prepars(tmp, list);
-		else
-			break ;
+		if ((int)ft_strlen(p->str) == 0)
+			delete_node_prepars(p, list);
+		p = p->next;
 	}
 	return (0);
 }

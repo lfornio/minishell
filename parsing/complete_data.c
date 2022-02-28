@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   complete_data.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfornio <lfornio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mshad <mshad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 19:30:25 by lfornio           #+#    #+#             */
-/*   Updated: 2022/02/23 10:53:06 by lfornio          ###   ########.fr       */
+/*   Updated: 2022/02/25 22:19:14 by mshad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	complete_data(t_data *data, t_envp *env)
 	delete_node_with_pipe(data->prepars);
 	data->count_commands = data->count_pipe + 1;
 	if (create_cmd(data, env) < 0)
+		return (-1);
+	if (data->count_commands == 1 && !(int)ft_strlen(data->commands->command))
 		return (-1);
 	return (0);
 }
